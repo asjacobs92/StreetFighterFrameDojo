@@ -14,9 +14,20 @@ public class Move {
     private String moveName;
     @DatabaseField
     private String moveInput;
+    @DatabaseField
+    private Character character;
 
     @ForeignCollectionField
     private ForeignCollection<FrameData> moveFrameData;
+
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
 
     public int getMoveId() {
         return moveId;

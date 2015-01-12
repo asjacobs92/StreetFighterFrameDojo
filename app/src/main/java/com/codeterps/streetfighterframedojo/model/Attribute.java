@@ -12,6 +12,8 @@ public class Attribute {
     private String attributeName;
     @DatabaseField
     private String attributeValue;
+    @DatabaseField
+    private Character character;
 
     public int getAttributeId() {
         return attributeId;
@@ -35,5 +37,13 @@ public class Attribute {
 
     public void setAttributeValue(String attributeValue) {
         this.attributeValue = attributeValue;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 }

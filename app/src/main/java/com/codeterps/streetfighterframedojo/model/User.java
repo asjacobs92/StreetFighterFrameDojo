@@ -25,4 +25,78 @@ public class User {
     private ForeignCollection<CharacterNoteVote> userCharacterNoteVotes;
     @ForeignCollectionField
     private ForeignCollection<MatchupNoteVote> userMatchupNoteVotes;
+    @ForeignCollectionField
+    private ForeignCollection<MatchupOutcomeVote> userMatchupOutcomeVotes;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getUserName() {
+        return userName;
+    }
+
+    public void setUserName(int userName) {
+        this.userName = userName;
+    }
+
+    public ForeignCollection<PublicCharacterNote> getUserPublicCharacterNotes() {
+        return userPublicCharacterNotes;
+    }
+
+    public void setUserPublicCharacterNotes(ForeignCollection<PublicCharacterNote> userPublicCharacterNotes) {
+        this.userPublicCharacterNotes = userPublicCharacterNotes;
+    }
+
+    public ForeignCollection<PersonalCharacterNote> getUserPersonalCharacterNotes() {
+        return userPersonalCharacterNotes;
+    }
+
+    public void setUserPersonalCharacterNotes(ForeignCollection<PersonalCharacterNote> userPersonalCharacterNotes) {
+        this.userPersonalCharacterNotes = userPersonalCharacterNotes;
+    }
+
+    public ForeignCollection<PublicMatchupNote> getUserPublicMatchupNotes() {
+        return userPublicMatchupNotes;
+    }
+
+    public void setUserPublicMatchupNotes(ForeignCollection<PublicMatchupNote> userPublicMatchupNotes) {
+        this.userPublicMatchupNotes = userPublicMatchupNotes;
+    }
+
+    public ForeignCollection<PersonalMatchupNote> getUserPersonalMatchupNotes() {
+        return userPersonalMatchupNotes;
+    }
+
+    public void setUserPersonalMatchupNotes(ForeignCollection<PersonalMatchupNote> userPersonalMatchupNotes) {
+        this.userPersonalMatchupNotes = userPersonalMatchupNotes;
+    }
+
+    public ForeignCollection<CharacterNoteVote> getUserCharacterNoteVotes() {
+        return userCharacterNoteVotes;
+    }
+
+    public void setUserCharacterNoteVotes(ForeignCollection<CharacterNoteVote> userCharacterNoteVotes) {
+        this.userCharacterNoteVotes = userCharacterNoteVotes;
+    }
+
+    public ForeignCollection<MatchupNoteVote> getUserMatchupNoteVotes() {
+        return userMatchupNoteVotes;
+    }
+
+    public void setUserMatchupNoteVotes(ForeignCollection<MatchupNoteVote> userMatchupNoteVotes) {
+        this.userMatchupNoteVotes = userMatchupNoteVotes;
+    }
+
+    public ForeignCollection<MatchupOutcomeVote> getUserMatchupOutcomeVotes() {
+        return userMatchupOutcomeVotes;
+    }
+
+    public void setUserMatchupOutcomeVotes(ForeignCollection<MatchupOutcomeVote> userMatchupOutcomeVotes) {
+        this.userMatchupOutcomeVotes = userMatchupOutcomeVotes;
+    }
 }

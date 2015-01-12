@@ -12,8 +12,51 @@ public class PublicCharacterNote {
     private int publicCharacterNoteId;
     @DatabaseField
     private String publicCharacterNoteContent;
+    @DatabaseField
+    private User user;
+    @DatabaseField
+    private Character character;
 
     @ForeignCollectionField
     private ForeignCollection<CharacterNoteVote> publicCharacterNoteVotes;
-    
+
+    public int getPublicCharacterNoteId() {
+        return publicCharacterNoteId;
+    }
+
+    public void setPublicCharacterNoteId(int publicCharacterNoteId) {
+        this.publicCharacterNoteId = publicCharacterNoteId;
+    }
+
+    public String getPublicCharacterNoteContent() {
+        return publicCharacterNoteContent;
+    }
+
+    public void setPublicCharacterNoteContent(String publicCharacterNoteContent) {
+        this.publicCharacterNoteContent = publicCharacterNoteContent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    public ForeignCollection<CharacterNoteVote> getPublicCharacterNoteVotes() {
+        return publicCharacterNoteVotes;
+    }
+
+    public void setPublicCharacterNoteVotes(ForeignCollection<CharacterNoteVote> publicCharacterNoteVotes) {
+        this.publicCharacterNoteVotes = publicCharacterNoteVotes;
+    }
 }

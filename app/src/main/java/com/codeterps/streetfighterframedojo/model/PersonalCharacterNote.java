@@ -10,6 +10,8 @@ public class PersonalCharacterNote {
     private int personalCharacterNoteId;
     @DatabaseField
     private String personalCharacterNoteContent;
+    @DatabaseField
+    private Character character;
 
     public int getPersonalCharacterNoteId() {
         return personalCharacterNoteId;

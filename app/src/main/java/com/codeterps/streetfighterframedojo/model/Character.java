@@ -12,6 +12,8 @@ public class Character {
     private int characterId;
     @DatabaseField
     private String characterName;
+    @DatabaseField
+    private Game game;
 
     @ForeignCollectionField
     private ForeignCollection<Attribute> characterAttributes;
@@ -19,6 +21,26 @@ public class Character {
     private ForeignCollection<Move> characterMoves;
     @ForeignCollectionField
     private ForeignCollection<PersonalCharacterNote> characterPersonalNotes;
+    @ForeignCollectionField
+    private ForeignCollection<Matchup> characterMatchups;
+    @ForeignCollectionField
+    private ForeignCollection<PublicCharacterNote> characterPublicNotes;
+
+    public ForeignCollection<PublicCharacterNote> getCharacterPublicNotes() {
+        return characterPublicNotes;
+    }
+
+    public void setCharacterPublicNotes(ForeignCollection<PublicCharacterNote> characterPublicNotes) {
+        this.characterPublicNotes = characterPublicNotes;
+    }
+
+    public ForeignCollection<Matchup> getCharacterMatchups() {
+        return characterMatchups;
+    }
+
+    public void setCharacterMatchups(ForeignCollection<Matchup> characterMatchups) {
+        this.characterMatchups = characterMatchups;
+    }
 
     public int getCharacterId() {
         return characterId;
@@ -50,5 +72,21 @@ public class Character {
 
     public void setCharacterMoves(ForeignCollection<Move> characterMoves) {
         this.characterMoves = characterMoves;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public ForeignCollection<PersonalCharacterNote> getCharacterPersonalNotes() {
+        return characterPersonalNotes;
+    }
+
+    public void setCharacterPersonalNotes(ForeignCollection<PersonalCharacterNote> characterPersonalNotes) {
+        this.characterPersonalNotes = characterPersonalNotes;
     }
 }

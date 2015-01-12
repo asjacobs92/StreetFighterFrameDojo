@@ -12,6 +12,8 @@ public class FrameData {
     private String frameDataName;
     @DatabaseField
     private String frameDataValue;
+    @DatabaseField
+    private Move move;
 
     public int getFrameDataId() {
         return frameDataId;
@@ -35,5 +37,13 @@ public class FrameData {
 
     public void setFrameDataValue(String frameDataValue) {
         this.frameDataValue = frameDataValue;
+    }
+
+    public Move getMove() {
+        return move;
+    }
+
+    public void setMove(Move move) {
+        this.move = move;
     }
 }
