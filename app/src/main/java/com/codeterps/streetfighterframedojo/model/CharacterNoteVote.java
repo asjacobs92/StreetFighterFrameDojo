@@ -1,12 +1,15 @@
 package com.codeterps.streetfighterframedojo.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.lang.*;
 
 /**
  * Created by FelipeIsrael on 1/9/2015.
  */
+
+@DatabaseTable(tableName = "characterNoteVote")
 public class CharacterNoteVote {
     @DatabaseField(generatedId = true)
     private int CharacterNoteVoteId;
