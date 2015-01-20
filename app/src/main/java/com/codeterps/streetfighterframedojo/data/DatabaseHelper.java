@@ -115,6 +115,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    // TO CREATE NEW DATABASE, COMMENT FROM HERE TO ...
 
     @Override
     public synchronized SQLiteDatabase getWritableDatabase() {
@@ -255,6 +256,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         outs.close();
         in.close();
     }
+
+    //.. HERE.
 
     public Dao<Attribute, Integer> getAttributeDao() throws SQLException {
         if (mAttributeDao == null) {

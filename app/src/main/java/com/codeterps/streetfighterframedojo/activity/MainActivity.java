@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.codeterps.streetfighterframedojo.R;
-import com.codeterps.streetfighterframedojo.adapter.DrawerListAdapter;
+import com.codeterps.streetfighterframedojo.adapter.NavDrawerAdapter;
 import com.codeterps.streetfighterframedojo.fragment.HomeFragment;
 import com.codeterps.streetfighterframedojo.model.DrawerListItem;
 
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new DrawerListAdapter(this, mNavDrawerItems));
+        mDrawerList.setAdapter(new NavDrawerAdapter(this, mNavDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer

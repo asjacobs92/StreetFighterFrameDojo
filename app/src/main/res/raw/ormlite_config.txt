@@ -1,5 +1,5 @@
 #
-# generated on 2015/01/19 11:16:45
+# generated on 2015/01/20 05:31:50
 #
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.Attribute
@@ -40,6 +40,12 @@ foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
+fieldName=clicks
+# --field-end--
+# --field-start--
+fieldName=lastClick
+# --field-end--
+# --field-start--
 fieldName=characterAttributes
 foreignCollection=true
 # --field-end--
@@ -64,7 +70,7 @@ foreignCollection=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.CharacterNoteVote
-tableName=characternotevote
+tableName=characterNoteVote
 # --table-fields-start--
 # --field-start--
 fieldName=CharacterNoteVoteId
@@ -88,7 +94,7 @@ foreignAutoRefresh=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.FrameData
-tableName=framedata
+tableName=frameData
 # --table-fields-start--
 # --field-start--
 fieldName=frameDataId
@@ -104,6 +110,9 @@ fieldName=frameDataValue
 fieldName=move
 foreign=true
 foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=frameDataSimple
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -121,6 +130,12 @@ fieldName=gameName
 # --field-end--
 # --field-start--
 fieldName=gameLogoPath
+# --field-end--
+# --field-start--
+fieldName=clicks
+# --field-end--
+# --field-start--
+fieldName=lastClick
 # --field-end--
 # --field-start--
 fieldName=gameCharacters
@@ -164,7 +179,7 @@ foreignCollection=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.MatchupNoteVote
-tableName=matchupnotevote
+tableName=matchupNoteVote
 # --table-fields-start--
 # --field-start--
 fieldName=matchupNoteVoteId
@@ -188,7 +203,7 @@ fieldName=characterNoteVoteLike
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.MatchupOutcomeVote
-tableName=matchupoutcomevote
+tableName=matchupOutcomeVote
 # --table-fields-start--
 # --field-start--
 fieldName=matchupOutcomeVoteId
@@ -233,6 +248,9 @@ foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
+fieldName=type
+# --field-end--
+# --field-start--
 fieldName=moveFrameData
 foreignCollection=true
 # --field-end--
@@ -241,7 +259,7 @@ foreignCollection=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.PersonalCharacterNote
-tableName=personalcharacternote
+tableName=personalCharacterNote
 # --table-fields-start--
 # --field-start--
 fieldName=personalCharacterNoteId
@@ -265,7 +283,7 @@ foreignAutoRefresh=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.PersonalMatchupNote
-tableName=personalmatchupnote
+tableName=personalMatchupNote
 # --table-fields-start--
 # --field-start--
 fieldName=personalMatchupNoteId
@@ -289,7 +307,7 @@ foreignAutoRefresh=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.PublicCharacterNote
-tableName=publiccharacternote
+tableName=publicCharacterNote
 # --table-fields-start--
 # --field-start--
 fieldName=publicCharacterNoteId
@@ -317,7 +335,7 @@ foreignCollection=true
 #################################
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.PublicMatchupNote
-tableName=publicmatchupnote
+tableName=publicMatchupNote
 # --table-fields-start--
 # --field-start--
 fieldName=publicMatchupNoteId

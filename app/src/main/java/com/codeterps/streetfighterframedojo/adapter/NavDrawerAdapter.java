@@ -16,13 +16,13 @@ import java.util.ArrayList;
 /**
  * Created by Arthur Jacobs on 1/19/2015.
  */
-public class DrawerListAdapter extends ArrayAdapter<DrawerListItem> {
+public class NavDrawerAdapter extends ArrayAdapter<DrawerListItem> {
 
     private LayoutInflater mInflater;
     private ArrayList<DrawerListItem> mNavDrawerItems;
 
-    public DrawerListAdapter(Context context, ArrayList<DrawerListItem> navDrawerItems) {
-        super(context, R.layout.drawer_list_item, navDrawerItems);
+    public NavDrawerAdapter(Context context, ArrayList<DrawerListItem> navDrawerItems) {
+        super(context, R.layout.nav_drawer_item, navDrawerItems);
         this.mNavDrawerItems = navDrawerItems;
     }
 
@@ -46,10 +46,10 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerListItem> {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = getLayoutInflater().inflate(R.layout.drawer_list_item, parent, false);
+            convertView = getLayoutInflater().inflate(R.layout.nav_drawer_item, parent, false);
             holder = new ViewHolder();
-            holder.image = (ImageView) convertView.findViewById(R.id.item_image);
-            holder.text = (TextView) convertView.findViewById(R.id.item_text);
+            holder.image = (ImageView) convertView.findViewById(R.id.nav_drawer_item_image);
+            holder.text = (TextView) convertView.findViewById(R.id.nav_drawer_item_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content">
 
     <TableRow
-        android:id="@+id/tableRow"
+        android:id="@+id/table_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#111"
@@ -15,24 +15,24 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/item_image"
+                android:id="@+id/nav_drawer_item_image"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_gravity="center_vertical"
                 android:padding="5dp"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
 
             <TextView
-                android:id="@+id/item_text"
+                android:id="@+id/nav_drawer_item_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/item_image"
-                android:layout_toRightOf="@+id/item_image"
+                android:layout_toEndOf="@+id/nav_drawer_item_image"
+                android:layout_toRightOf="@+id/nav_drawer_item_image"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"/>
         </RelativeLayout>
 
     </TableRow>
