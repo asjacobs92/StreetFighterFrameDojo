@@ -17,6 +17,26 @@ public class Character {
     private String characterName;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Game game;
+    @DatabaseField
+    private int clicks;
+    @DatabaseField
+    private long lastClick;
+
+    public int getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
+    }
+
+    public long getLastClick() {
+        return lastClick;
+    }
+
+    public void setLastClick(long lastClick) {
+        this.lastClick = lastClick;
+    }
 
     @ForeignCollectionField
     private ForeignCollection<Attribute> characterAttributes;

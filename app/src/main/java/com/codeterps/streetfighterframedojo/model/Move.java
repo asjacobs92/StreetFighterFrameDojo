@@ -20,6 +20,17 @@ public class Move {
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character;
 
+    @DatabaseField
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @ForeignCollectionField
     private ForeignCollection<FrameData> moveFrameData;
 

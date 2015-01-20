@@ -17,6 +17,28 @@ public class Game {
     private String gameName;
     @DatabaseField
     private String gameLogoPath;
+    @DatabaseField
+    private int clicks;
+    @DatabaseField
+    private long lastClick;
+
+
+    public int getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
+    }
+
+    public long getLastClick() {
+        return lastClick;
+    }
+
+    public void setLastClick(long lastClick) {
+        this.lastClick = lastClick;
+    }
+
 
     @ForeignCollectionField
     private ForeignCollection<Character> gameCharacters;

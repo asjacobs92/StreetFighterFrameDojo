@@ -17,6 +17,16 @@ public class FrameData {
     private String frameDataValue;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Move move;
+    @DatabaseField
+    private boolean frameDataSimple;
+
+    public boolean isFrameDataSimple() {
+        return frameDataSimple;
+    }
+
+    public void setFrameDataSimple(boolean frameDataSimple) {
+        this.frameDataSimple = frameDataSimple;
+    }
 
     public int getFrameDataId() {
         return frameDataId;
