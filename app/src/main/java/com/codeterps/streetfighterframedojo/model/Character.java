@@ -12,7 +12,7 @@ public class Character {
     private int characterId;
     @DatabaseField
     private String characterName;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Game game;
 
     @ForeignCollectionField

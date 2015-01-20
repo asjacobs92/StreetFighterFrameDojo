@@ -10,9 +10,9 @@ import com.j256.ormlite.field.ForeignCollectionField;
 public class Matchup {
     @DatabaseField(generatedId = true)
     private int matchupId;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character1;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character2;
 
     @ForeignCollectionField

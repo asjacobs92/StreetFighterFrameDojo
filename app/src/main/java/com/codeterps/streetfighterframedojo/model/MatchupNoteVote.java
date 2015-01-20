@@ -8,9 +8,9 @@ import com.j256.ormlite.field.DatabaseField;
 public class MatchupNoteVote {
     @DatabaseField(generatedId = true)
     private int matchupNoteVoteId;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private PublicMatchupNote publicMatchupNote;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private User user;
     @DatabaseField
     private boolean characterNoteVoteLike;

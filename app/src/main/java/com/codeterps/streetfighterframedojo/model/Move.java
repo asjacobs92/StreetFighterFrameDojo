@@ -14,7 +14,7 @@ public class Move {
     private String moveName;
     @DatabaseField
     private String moveInput;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character;
 
     @ForeignCollectionField

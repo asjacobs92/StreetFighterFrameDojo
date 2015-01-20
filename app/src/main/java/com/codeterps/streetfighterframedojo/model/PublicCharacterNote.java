@@ -12,9 +12,9 @@ public class PublicCharacterNote {
     private int publicCharacterNoteId;
     @DatabaseField
     private String publicCharacterNoteContent;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private User user;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character;
 
     @ForeignCollectionField

@@ -10,7 +10,10 @@ public class PersonalCharacterNote {
     private int personalCharacterNoteId;
     @DatabaseField
     private String personalCharacterNoteContent;
-    @DatabaseField
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private User user;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character;
 
     public int getPersonalCharacterNoteId() {
@@ -27,5 +30,21 @@ public class PersonalCharacterNote {
 
     public void setPersonalCharacterNoteContent(String personalCharacterNoteContent) {
         this.personalCharacterNoteContent = personalCharacterNoteContent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 }

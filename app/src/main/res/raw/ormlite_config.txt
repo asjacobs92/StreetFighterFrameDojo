@@ -1,57 +1,85 @@
 #
-# generated on 2014/09/07 11:53:38
+# generated on 2015/01/19 11:16:45
 #
 # --table-start--
-dataClass=edu.maryland.leafsnap.model.CollectedLeaf
-tableName=collectedleaf
+dataClass=com.codeterps.streetfighterframedojo.model.Attribute
+tableName=attribute
 # --table-fields-start--
 # --field-start--
-fieldName=candidateSpecies
+fieldName=attributeId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=attributeName
+# --field-end--
+# --field-start--
+fieldName=attributeValue
+# --field-end--
+# --field-start--
+fieldName=character
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.Character
+tableName=character
+# --table-fields-start--
+# --field-start--
+fieldName=characterId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=characterName
+# --field-end--
+# --field-start--
+fieldName=game
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=characterAttributes
 foreignCollection=true
-foreignCollectionEager=true
 # --field-end--
 # --field-start--
-fieldName=id
+fieldName=characterMoves
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=characterPersonalNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=characterMatchups
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=characterPublicNotes
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.CharacterNoteVote
+tableName=characternotevote
+# --table-fields-start--
+# --field-start--
+fieldName=CharacterNoteVoteId
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=leafID
+fieldName=CharacterNoteVoteLike
 # --field-end--
 # --field-start--
-fieldName=altitude
-# --field-end--
-# --field-start--
-fieldName=latitude
-# --field-end--
-# --field-start--
-fieldName=longitude
-# --field-end--
-# --field-start--
-fieldName=uploaded
-# --field-end--
-# --field-start--
-fieldName=collectedDate
-dataPersister=DATE_STRING
-# --field-end--
-# --field-start--
-fieldName=lastModified
-dataPersister=DATE_STRING
-# --field-end--
-# --field-start--
-fieldName=syncStatus
-# --field-end--
-# --field-start--
-fieldName=selectedSpeciesRel
+fieldName=user
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
-fieldName=originalImageURL
-foreign=true
-foreignAutoRefresh=true
-# --field-end--
-# --field-start--
-fieldName=segmentedImageURL
+fieldName=voteNote
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
@@ -59,99 +87,21 @@ foreignAutoRefresh=true
 # --table-end--
 #################################
 # --table-start--
-dataClass=edu.maryland.leafsnap.model.DatabaseInfo
-tableName=databaseinfo
+dataClass=com.codeterps.streetfighterframedojo.model.FrameData
+tableName=framedata
 # --table-fields-start--
 # --field-start--
-fieldName=id
+fieldName=frameDataId
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=version
+fieldName=frameDataName
 # --field-end--
 # --field-start--
-fieldName=fullyLoaded
+fieldName=frameDataValue
 # --field-end--
 # --field-start--
-fieldName=lastUpdate
-dataPersister=DATE_STRING
-version=true
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
-# --table-start--
-dataClass=edu.maryland.leafsnap.model.LeafletUrl
-tableName=leafleturl
-# --table-fields-start--
-# --field-start--
-fieldName=id
-generatedId=true
-# --field-end--
-# --field-start--
-fieldName=order
-# --field-end--
-# --field-start--
-fieldName=rawURL
-# --field-end--
-# --field-start--
-fieldName=type
-# --field-end--
-# --field-start--
-fieldName=dataSource
-# --field-end--
-# --field-start--
-fieldName=thumbnailLocation
-# --field-end--
-# --field-start--
-fieldName=hiResImageLocation
-# --field-end--
-# --field-start--
-fieldName=associatedSpecies
-foreign=true
-foreignAutoRefresh=true
-# --field-end--
-# --field-start--
-fieldName=revExampleImageLeaf
-foreign=true
-# --field-end--
-# --field-start--
-fieldName=revExampleImageFlower
-foreign=true
-# --field-end--
-# --field-start--
-fieldName=revExampleImageFruit
-foreign=true
-# --field-end--
-# --field-start--
-fieldName=revOriginalImageURL
-foreign=true
-# --field-end--
-# --field-start--
-fieldName=revSegmentedImageURL
-foreign=true
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
-# --table-start--
-dataClass=edu.maryland.leafsnap.model.RankedSpecies
-tableName=rankedspecies
-# --table-fields-start--
-# --field-start--
-fieldName=id
-generatedId=true
-# --field-end--
-# --field-start--
-fieldName=rank
-# --field-end--
-# --field-start--
-fieldName=species
-foreign=true
-foreignAutoRefresh=true
-# --field-end--
-# --field-start--
-fieldName=associatedCollection
+fieldName=move
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
@@ -159,59 +109,277 @@ foreignAutoRefresh=true
 # --table-end--
 #################################
 # --table-start--
-dataClass=edu.maryland.leafsnap.model.Species
-tableName=species
+dataClass=com.codeterps.streetfighterframedojo.model.Game
+tableName=game
 # --table-fields-start--
 # --field-start--
-fieldName=id
+fieldName=gameId
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=dataset
+fieldName=gameName
 # --field-end--
 # --field-start--
-fieldName=popularName
-unique=true
+fieldName=gameLogoPath
 # --field-end--
 # --field-start--
-fieldName=description
+fieldName=gameCharacters
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.Matchup
+tableName=matchup
+# --table-fields-start--
+# --field-start--
+fieldName=matchupId
+generatedId=true
 # --field-end--
 # --field-start--
-fieldName=scientificName
-unique=true
-# --field-end--
-# --field-start--
-fieldName=habitat
-# --field-end--
-# --field-start--
-fieldName=bloom
-# --field-end--
-# --field-start--
-fieldName=growth
-# --field-end--
-# --field-start--
-fieldName=longevity
-# --field-end--
-# --field-start--
-fieldName=presence
-# --field-end--
-# --field-start--
-fieldName=exampleImageFlower
+fieldName=character1
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
-fieldName=exampleImageLeaf
+fieldName=character2
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
-fieldName=exampleImageFruit
+fieldName=personalMatchupNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=publicMatchupNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=matchupOutcomeVotes
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.MatchupNoteVote
+tableName=matchupnotevote
+# --table-fields-start--
+# --field-start--
+fieldName=matchupNoteVoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=publicMatchupNote
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
 # --field-start--
-fieldName=associatedRankedSpecies
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=characterNoteVoteLike
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.MatchupOutcomeVote
+tableName=matchupoutcomevote
+# --table-fields-start--
+# --field-start--
+fieldName=matchupOutcomeVoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=character1Score
+# --field-end--
+# --field-start--
+fieldName=character2Score
+# --field-end--
+# --field-start--
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=matchup
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.Move
+tableName=move
+# --table-fields-start--
+# --field-start--
+fieldName=moveId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=moveName
+# --field-end--
+# --field-start--
+fieldName=moveInput
+# --field-end--
+# --field-start--
+fieldName=character
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=moveFrameData
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.PersonalCharacterNote
+tableName=personalcharacternote
+# --table-fields-start--
+# --field-start--
+fieldName=personalCharacterNoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=personalCharacterNoteContent
+# --field-end--
+# --field-start--
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=character
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.PersonalMatchupNote
+tableName=personalmatchupnote
+# --table-fields-start--
+# --field-start--
+fieldName=personalMatchupNoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=content
+# --field-end--
+# --field-start--
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=matchup
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.PublicCharacterNote
+tableName=publiccharacternote
+# --table-fields-start--
+# --field-start--
+fieldName=publicCharacterNoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=publicCharacterNoteContent
+# --field-end--
+# --field-start--
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=character
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=publicCharacterNoteVotes
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.PublicMatchupNote
+tableName=publicmatchupnote
+# --table-fields-start--
+# --field-start--
+fieldName=publicMatchupNoteId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=user
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=matchup
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=matchupNoteVotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=content
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.codeterps.streetfighterframedojo.model.User
+tableName=user
+# --table-fields-start--
+# --field-start--
+fieldName=userId
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=userName
+# --field-end--
+# --field-start--
+fieldName=userPublicCharacterNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userPersonalCharacterNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userPublicMatchupNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userPersonalMatchupNotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userCharacterNoteVotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userMatchupNoteVotes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=userMatchupOutcomeVotes
 foreignCollection=true
 # --field-end--
 # --table-fields-end--

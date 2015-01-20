@@ -2,8 +2,6 @@ package com.codeterps.streetfighterframedojo.model;
 
 import com.j256.ormlite.field.DatabaseField;
 
-import java.lang.*;
-
 /**
  * Created by FelipeIsrael on 1/9/2015.
  */
@@ -12,9 +10,9 @@ public class CharacterNoteVote {
     private int CharacterNoteVoteId;
     @DatabaseField
     private boolean CharacterNoteVoteLike;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private User user;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private PublicCharacterNote voteNote;
 
     public int getCharacterNoteVoteId() {

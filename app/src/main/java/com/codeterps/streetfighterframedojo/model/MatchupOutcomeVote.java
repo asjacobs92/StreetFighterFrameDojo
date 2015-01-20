@@ -7,20 +7,23 @@ import com.j256.ormlite.field.DatabaseField;
  */
 public class MatchupOutcomeVote {
     @DatabaseField(generatedId = true)
-    private int MatchupOutcomeVoteId;
+    private int matchupOutcomeVoteId;
     @DatabaseField
     private int character1Score;
     @DatabaseField
     private int character2Score;
-    @DatabaseField
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private User user;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Matchup matchup;
 
     public int getMatchupOutcomeVoteId() {
-        return MatchupOutcomeVoteId;
+        return matchupOutcomeVoteId;
     }
 
     public void setMatchupOutcomeVoteId(int matchupOutcomeVoteId) {
-        MatchupOutcomeVoteId = matchupOutcomeVoteId;
+        this.matchupOutcomeVoteId = matchupOutcomeVoteId;
     }
 
     public int getCharacter1Score() {
@@ -37,6 +40,14 @@ public class MatchupOutcomeVote {
 
     public void setCharacter2Score(int character2Score) {
         this.character2Score = character2Score;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Matchup getMatchup() {

@@ -12,7 +12,7 @@ public class FrameData {
     private String frameDataName;
     @DatabaseField
     private String frameDataValue;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Move move;
 
     public int getFrameDataId() {

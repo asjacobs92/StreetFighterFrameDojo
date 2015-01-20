@@ -12,7 +12,7 @@ public class Attribute {
     private String attributeName;
     @DatabaseField
     private String attributeValue;
-    @DatabaseField
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Character character;
 
     public int getAttributeId() {

@@ -12,6 +12,8 @@ public class Game {
     private int gameId;
     @DatabaseField
     private String gameName;
+    @DatabaseField
+    private String gameLogoPath;
 
     @ForeignCollectionField
     private ForeignCollection<Character> gameCharacters;
@@ -32,6 +34,14 @@ public class Game {
         this.gameName = gameName;
     }
 
+    public String getGameLogoPath() {
+        return gameLogoPath;
+    }
+
+    public void setGameLogoPath(String gameLogoPath) {
+        this.gameLogoPath = gameLogoPath;
+    }
+
     public ForeignCollection<Character> getGameCharacters() {
         return gameCharacters;
     }
@@ -39,4 +49,6 @@ public class Game {
     public void setGameCharacters(ForeignCollection<Character> gameCharacters) {
         this.gameCharacters = gameCharacters;
     }
+
+
 }

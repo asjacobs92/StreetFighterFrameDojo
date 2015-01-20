@@ -9,9 +9,12 @@ public class PersonalMatchupNote {
     @DatabaseField(generatedId = true)
     private int personalMatchupNoteId;
     @DatabaseField
-    private Matchup matchup;
-    @DatabaseField
     private String content;
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private User user;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Matchup matchup;
 
     public int getPersonalMatchupNoteId() {
         return personalMatchupNoteId;
@@ -19,6 +22,14 @@ public class PersonalMatchupNote {
 
     public void setPersonalMatchupNoteId(int personalMatchupNoteId) {
         this.personalMatchupNoteId = personalMatchupNoteId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Matchup getMatchup() {
