@@ -1,5 +1,5 @@
 #
-# generated on 2015/01/20 05:31:50
+# generated on 2015/01/21 06:17:09
 #
 # --table-start--
 dataClass=com.codeterps.streetfighterframedojo.model.Attribute

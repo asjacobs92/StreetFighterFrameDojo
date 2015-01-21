@@ -9,19 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
-import com.codeterps.streetfighterframedojo.model.DrawerListItem;
+import com.codeterps.streetfighterframedojo.model.NavDrawerItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by Arthur Jacobs on 1/19/2015.
  */
-public class NavDrawerAdapter extends ArrayAdapter<DrawerListItem> {
+public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
 
     private LayoutInflater mInflater;
-    private ArrayList<DrawerListItem> mNavDrawerItems;
+    private ArrayList<NavDrawerItem> mNavDrawerItems;
 
-    public NavDrawerAdapter(Context context, ArrayList<DrawerListItem> navDrawerItems) {
+    public NavDrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         super(context, R.layout.nav_drawer_item, navDrawerItems);
         this.mNavDrawerItems = navDrawerItems;
     }
@@ -32,7 +32,7 @@ public class NavDrawerAdapter extends ArrayAdapter<DrawerListItem> {
     }
 
     @Override
-    public DrawerListItem getItem(int position) {
+    public NavDrawerItem getItem(int position) {
         return mNavDrawerItems.get(position);
     }
 

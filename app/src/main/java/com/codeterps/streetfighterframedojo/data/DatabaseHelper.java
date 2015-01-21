@@ -116,7 +116,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     // TO CREATE NEW DATABASE, COMMENT FROM HERE TO ...
-
     @Override
     public synchronized SQLiteDatabase getWritableDatabase() {
         if (mDatabase != null && mDatabase.isOpen() && !mDatabase.isReadOnly()) {

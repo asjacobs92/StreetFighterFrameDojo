@@ -16,24 +16,27 @@
 
             <ImageView
                 android:id="@+id/nav_drawer_item_image"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_account"/>
 
             <TextView
                 android:id="@+id/nav_drawer_item_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/nav_drawer_item_image"
-                android:layout_toRightOf="@+id/nav_drawer_item_image"
+                android:text="Account"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@android:color/white"/>
         </RelativeLayout>
-
     </TableRow>
 </FrameLayout>

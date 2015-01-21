@@ -3,25 +3,25 @@ package com.codeterps.streetfighterframedojo.model;
 /**
  * Created by Arthur Jacobs on 1/19/2015.
  */
-public class DrawerListItem {
+public class NavDrawerItem {
 
     private String title;
     private int icon;
 
-    public DrawerListItem() {
+    public NavDrawerItem() {
     }
 
-    public DrawerListItem(int icon) {
+    public NavDrawerItem(int icon) {
         this.title = "";
         this.icon = icon;
     }
 
-    public DrawerListItem(String title, int icon) {
+    public NavDrawerItem(String title, int icon) {
         this.title = title;
         this.icon = icon;
     }
 
-    public DrawerListItem(String title, int icon, boolean isCounterVisible, String count) {
+    public NavDrawerItem(String title, int icon, boolean isCounterVisible, String count) {
         this.title = title;
         this.icon = icon;
     }

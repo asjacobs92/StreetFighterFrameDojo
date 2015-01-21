@@ -1,10 +1,13 @@
 package com.codeterps.streetfighterframedojo.adapter;
 
 import android.content.Context;
+import android.graphics.Outline;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,10 +39,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mTextView.setText(mDataset.get(position).getGameName());
         holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, mDataset.get(position).getGameLogoPath()));
+        ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int size = mContext.getResources().getDimensionPixelSize(R.dimen.fab_size);
+                outline.setOval(0, 0, size, size);
+            }
+        };
+        holder.mImageButton.setOutlineProvider(viewOutlineProvider);
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
@@ -53,11 +65,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public ImageView mImageView;
+        public ImageButton mImageButton;
 
         public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.game_card_title);
             mImageView = (ImageView) v.findViewById(R.id.game_card_logo);
+            mImageButton = (ImageButton) v.findViewById(R.id.game_card_favorite_fab);
         }
     }
 }

@@ -17,28 +17,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.NavDrawerAdapter;
 import com.codeterps.streetfighterframedojo.fragment.HomeFragment;
-import com.codeterps.streetfighterframedojo.model.DrawerListItem;
+import com.codeterps.streetfighterframedojo.model.NavDrawerItem;
 
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
     private DrawerLayout mDrawerLayout;
+    private RelativeLayout mDrawerListLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
-
-    // slide menu items
-    private String[] mNavMenuTitles;
-    private TypedArray mNavMenuIcons;
-    private ArrayList<DrawerListItem> mNavDrawerItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +44,23 @@ public class MainActivity extends ActionBarActivity {
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerListLayout = (RelativeLayout) findViewById(R.id.drawer_list_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer_list);
 
-        mNavMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        mNavMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+        String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
-        mNavDrawerItems = new ArrayList<>();
-        mNavDrawerItems.add(new DrawerListItem(mNavMenuTitles[0], mNavMenuIcons.getResourceId(0, -1)));
-        mNavDrawerItems.add(new DrawerListItem(mNavMenuTitles[1], mNavMenuIcons.getResourceId(1, -1)));
-        mNavDrawerItems.add(new DrawerListItem(mNavMenuTitles[2], mNavMenuIcons.getResourceId(2, -1)));
-        mNavDrawerItems.add(new DrawerListItem(mNavMenuTitles[3], mNavMenuIcons.getResourceId(3, -1)));
-        mNavMenuIcons.recycle();
+        ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<>();
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        navMenuIcons.recycle();
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new NavDrawerAdapter(this, mNavDrawerItems));
+        mDrawerList.setAdapter(new NavDrawerAdapter(this, navDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -105,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerListLayout);
         menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -144,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawerListLayout);
     }
 
     @Override

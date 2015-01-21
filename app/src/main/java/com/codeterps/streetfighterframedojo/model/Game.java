@@ -22,24 +22,6 @@ public class Game {
     @DatabaseField
     private long lastClick;
 
-
-    public int getClicks() {
-        return clicks;
-    }
-
-    public void setClicks(int clicks) {
-        this.clicks = clicks;
-    }
-
-    public long getLastClick() {
-        return lastClick;
-    }
-
-    public void setLastClick(long lastClick) {
-        this.lastClick = lastClick;
-    }
-
-
     @ForeignCollectionField
     private ForeignCollection<Character> gameCharacters;
 
@@ -65,6 +47,22 @@ public class Game {
 
     public void setGameLogoPath(String gameLogoPath) {
         this.gameLogoPath = gameLogoPath;
+    }
+
+    public int getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
+    }
+
+    public long getLastClick() {
+        return lastClick;
+    }
+
+    public void setLastClick(long lastClick) {
+        this.lastClick = lastClick;
     }
 
     public ForeignCollection<Character> getGameCharacters() {

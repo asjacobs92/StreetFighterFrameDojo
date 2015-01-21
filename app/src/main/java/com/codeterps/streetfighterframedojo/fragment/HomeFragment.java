@@ -42,28 +42,12 @@ public class HomeFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        List<Game> gameList = new ArrayList<Game>();
+        List<Game> gameList = new ArrayList<>();
         try {
             gameList = getDbHelper().getGameDao().queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //Hardcoded, remove when db is populated.
-        Game usf4 = new Game();
-        usf4.setGameName("Ultra Street Fighter 4");
-        usf4.setGameLogoPath("game_logos/usf4_logo.jpg");
-        gameList.add(usf4);
-
-        Game sf3ts = new Game();
-        sf3ts.setGameName("Street Fighter 3 Third Strike");
-        sf3ts.setGameLogoPath("game_logos/sf3ts_logo.jpg");
-        gameList.add(sf3ts);
-
-        Game ssf2t = new Game();
-        ssf2t.setGameName("Super Street Fighter 2 Turbo");
-        ssf2t.setGameLogoPath("game_logos/ssf2t_logo.jpg");
-        gameList.add(ssf2t);
-
         recList.setAdapter(new CardListAdapter(getActivity(), gameList));
 
         return v;
