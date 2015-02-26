@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
+    android:elevation="10dp"
     card_view:cardCornerRadius="5dp">
 
     <RelativeLayout
@@ -26,15 +27,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/game_card_logo"
-            android:background="#212121"
+            android:background="@color/primary_dark_material_dark"
             android:gravity="center_vertical"
             android:padding="7dp"
             android:text="Ultra Street Fighter 4"
-            android:textColor="@android:color/white"
             android:textSize="20sp"/>
 
         <ImageButton
-            android:id="@+id/game_card_favorite_fab"
+            android:id="@+id/game_card_fab"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:layout_alignBottom="@+id/game_card_title"
@@ -43,9 +43,9 @@
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="18dp"
             android:background="@drawable/fab_ripple_effect"
-            android:elevation="4dp"
+            android:elevation="8dp"
             android:src="@drawable/ic_action_expand"
-            android:stateListAnimator="@anim/fab_float_anim"/>
+            android:stateListAnimator="@anim/float_anim"/>
 
     </RelativeLayout>
 

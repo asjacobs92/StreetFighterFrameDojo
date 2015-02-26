@@ -5,22 +5,37 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by FelipeIsrael on 1/9/2015.
  */
 
 @DatabaseTable(tableName = "character")
-public class Character {
+public class Character implements Serializable {
+
     @DatabaseField(generatedId = true)
     private int characterId;
     @DatabaseField
     private String characterName;
+    @DatabaseField
+    private String characterImagePath;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Game game;
     @DatabaseField
     private int clicks;
     @DatabaseField
     private long lastClick;
+    @ForeignCollectionField
+    private ForeignCollection<Attribute> characterAttributes;
+    @ForeignCollectionField
+    private ForeignCollection<Move> characterMoves;
+    @ForeignCollectionField
+    private ForeignCollection<PersonalCharacterNote> characterPersonalNotes;
+    @ForeignCollectionField
+    private ForeignCollection<Matchup> characterMatchups;
+    @ForeignCollectionField
+    private ForeignCollection<PublicCharacterNote> characterPublicNotes;
 
     public int getClicks() {
         return clicks;
@@ -37,17 +52,6 @@ public class Character {
     public void setLastClick(long lastClick) {
         this.lastClick = lastClick;
     }
-
-    @ForeignCollectionField
-    private ForeignCollection<Attribute> characterAttributes;
-    @ForeignCollectionField
-    private ForeignCollection<Move> characterMoves;
-    @ForeignCollectionField
-    private ForeignCollection<PersonalCharacterNote> characterPersonalNotes;
-    @ForeignCollectionField
-    private ForeignCollection<Matchup> characterMatchups;
-    @ForeignCollectionField
-    private ForeignCollection<PublicCharacterNote> characterPublicNotes;
 
     public ForeignCollection<PublicCharacterNote> getCharacterPublicNotes() {
         return characterPublicNotes;
@@ -79,6 +83,14 @@ public class Character {
 
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
+    }
+
+    public String getCharacterImagePath() {
+        return characterImagePath;
+    }
+
+    public void setCharacterImagePath(String characterImagePath) {
+        this.characterImagePath = characterImagePath;
     }
 
     public ForeignCollection<Attribute> getCharacterAttributes() {
