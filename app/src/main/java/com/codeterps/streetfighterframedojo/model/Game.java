@@ -5,12 +5,15 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by FelipeIsrael on 1/9/2015.
  */
 
 @DatabaseTable(tableName = "game")
-public class Game {
+public class Game implements Serializable {
+
     @DatabaseField(generatedId = true)
     private int gameId;
     @DatabaseField
@@ -72,6 +75,5 @@ public class Game {
     public void setGameCharacters(ForeignCollection<Character> gameCharacters) {
         this.gameCharacters = gameCharacters;
     }
-
 
 }

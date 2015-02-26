@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="theme_color">#CC0000</color>
+    <color name="character_list_background">#EDEDED</color>
+    <color name="character_item_name_color">#505050</color>
+    <color name="tranparent_grey">#66505050</color>
 </resources>

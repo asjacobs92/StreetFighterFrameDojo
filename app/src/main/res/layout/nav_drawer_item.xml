@@ -7,7 +7,7 @@
         android:id="@+id/table_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#111"
+        android:background="@color/primary_material_dark"
         android:weightSum="1">
 
         <RelativeLayout
@@ -35,8 +35,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/nav_drawer_item_image"
                 android:text="Account"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
         </RelativeLayout>
     </TableRow>
 </FrameLayout>

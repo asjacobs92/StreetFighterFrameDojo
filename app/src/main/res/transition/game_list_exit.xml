@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+               android:duration="500"
+               android:transitionOrdering="sequential">
+    <transitionSet
+        android:transitionOrdering="together">
+        <changeTransform>
+            <targets>
+                <target android:targetId="@id/game_card_view"/>
+                <target android:targetId="@id/game_card_logo"/>
+            </targets>
+        </changeTransform>
+        <changeBounds>
+            <targets>
+                <target android:targetId="@id/game_card_view"/>
+                <target android:targetId="@id/game_card_logo"/>
+            </targets>
+        </changeBounds>
+    </transitionSet>
+
+    <transitionSet
+        android:transitionOrdering="together">
+        <changeTransform>
+            <targets>
+                <target android:targetId="@id/game_card_title"/>
+                <target android:targetId="@id/game_card_fab"/>
+            </targets>
+        </changeTransform>
+        <changeBounds>
+            <targets>
+                <target android:targetId="@id/game_card_title"/>
+                <target android:targetId="@id/game_card_fab"/>
+            </targets>
+        </changeBounds>
+    </transitionSet>
+</transitionSet>
