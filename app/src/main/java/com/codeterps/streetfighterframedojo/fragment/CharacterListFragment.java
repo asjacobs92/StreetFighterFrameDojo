@@ -1,6 +1,5 @@
 package com.codeterps.streetfighterframedojo.fragment;
 
-import android.graphics.Outline;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +66,6 @@ public class CharacterListFragment extends Fragment {
                              Bundle savedInstanceState) {
         setExitTransition(new Slide());
 
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_character_list, container, false);
         v.setTransitionName(mTransitionNames[0]);
 
@@ -82,20 +79,16 @@ public class CharacterListFragment extends Fragment {
 
         final ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
         imageButton.setTransitionName(mTransitionNames[3]);
-        ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
-                outline.setOval(0, 0, size, size);
-            }
-        };
-        imageButton.setOutlineProvider(viewOutlineProvider);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
-        });
+        };
+
+        v.setOnClickListener(clickListener);
+        imageButton.setOnClickListener(clickListener);
 
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
         recList.addItemDecoration(new DividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_list_divider), true, true));
@@ -104,17 +97,6 @@ public class CharacterListFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         recList.setAdapter(mCharactersListAdapter);
-
-        /*Palette.generateAsync(MediaUtils.getBitmapFromDrawable(gameLogoView.getDrawable()), new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                Palette.Swatch swatch = palette.getVibrantSwatch();
-                if (swatch != null) {
-                    gameTitleView.setBackgroundColor(swatch.getRgb());
-                    gameTitleView.setTextColor(swatch.getTitleTextColor());
-                }
-            }
-        });*/
 
         return v;
     }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theme_color">#CC0000</color>
-    <color name="character_list_background">#EDEDED</color>
-    <color name="character_item_name_color">#505050</color>
+    <color name="primary_theme_color">#CC0000</color>
+    <color name="accent_theme_color">#FFA4A4</color>
+    <color name="primary_theme_color_light">#F81717</color>
+    <color name="primary_theme_color_dark">#7D0000</color>
+    <color name="background_light">#EDEDED</color>
+    <color name="dark_text_color">#505050</color>
     <color name="tranparent_grey">#66505050</color>
 </resources>

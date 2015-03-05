@@ -1,18 +1,20 @@
 package com.codeterps.streetfighterframedojo.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.model.Character;
 import com.codeterps.streetfighterframedojo.util.MediaUtils;
+import com.melnykov.fab.FloatingActionButton;
 
 public class CharacterDetailsActivity extends ActionBarActivity {
 
@@ -37,25 +39,39 @@ public class CharacterDetailsActivity extends ActionBarActivity {
             characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this,
                     MediaUtils.getCharPortraitUri(mCharacter.getGame().getGameName(), mCharacter.getCharacterName())));
 
-            final TextView characterName = (TextView) findViewById(R.id.character_item_name);
+            TextView characterName = (TextView) findViewById(R.id.character_item_name);
             characterName.setText(mCharacter.getCharacterName());
 
-            Palette.generateAsync(MediaUtils.getBitmapFromDrawable(characterImage.getDrawable()), new Palette.PaletteAsyncListener() {
-                @Override
-                public void onGenerated(Palette palette) {
-                    Palette.Swatch swatch = palette.getDarkVibrantSwatch();
-                    if (swatch == null) {
-                        swatch = palette.getMutedSwatch();
-                    }
-
-                    if (swatch != null) {
-                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.character_header_layout);
-                        layout.setBackgroundColor(swatch.getRgb());
-                        characterName.setTextColor(swatch.getTitleTextColor());
-                    }
-                }
-            });
+            Bitmap characterBitmap = MediaUtils.getBitmapFromDrawable(characterImage.getDrawable());
+            Palette.generateAsync(characterBitmap, getPaletteAsyncListener());
         }
+    }
+
+    private Palette.PaletteAsyncListener getPaletteAsyncListener() {
+        return new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                Palette.Swatch primarySwatch = palette.getVibrantSwatch();
+                Palette.Swatch darkPrimarySwatch = palette.getDarkVibrantSwatch();
+
+                if (primarySwatch == null || darkPrimarySwatch == null) {
+                    primarySwatch = palette.getMutedSwatch();
+                    darkPrimarySwatch = palette.getDarkMutedSwatch();
+                }
+
+                if (primarySwatch != null && darkPrimarySwatch != null) {
+                    View headerLayout = findViewById(R.id.character_header_layout);
+                    headerLayout.setBackgroundColor(primarySwatch.getRgb());
+                    TextView characterName = (TextView) findViewById(R.id.character_item_name);
+                    characterName.setTextColor(primarySwatch.getTitleTextColor());
+
+                    FloatingActionButton characterMatchupFab = (FloatingActionButton) findViewById(R.id.character_matchup_fab);
+                    characterMatchupFab.setColorNormal(darkPrimarySwatch.getRgb());
+                    characterMatchupFab.setColorPressed(primarySwatch.getRgb());
+                    characterMatchupFab.setColorRipple(darkPrimarySwatch.getTitleTextColor());
+                }
+            }
+        };
     }
 
 
