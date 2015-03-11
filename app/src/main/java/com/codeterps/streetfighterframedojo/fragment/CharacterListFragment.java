@@ -17,7 +17,7 @@ import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.CharacterListAdapter;
 import com.codeterps.streetfighterframedojo.model.Character;
 import com.codeterps.streetfighterframedojo.model.Game;
-import com.codeterps.streetfighterframedojo.util.DividerItemDecoration;
+import com.codeterps.streetfighterframedojo.ui.ListDividerItemDecoration;
 import com.codeterps.streetfighterframedojo.util.MediaUtils;
 
 import java.util.ArrayList;
@@ -31,9 +31,8 @@ public class CharacterListFragment extends Fragment {
     private Game mGame;
     private String mTransitionNames[];
 
-    private List<Character> mCharacterList;
-    private CharacterListAdapter mCharactersListAdapter;
-
+    private List<Character> mCharacters;
+    private CharacterListAdapter mCharactersAdapter;
 
     public CharacterListFragment() {
     }
@@ -54,8 +53,8 @@ public class CharacterListFragment extends Fragment {
             mGame = (Game) getArguments().getSerializable(ARG_GAME);
             mTransitionNames = getArguments().getStringArray(ARG_TRANSITION_NAMES);
 
-            mCharacterList = new ArrayList<>();
-            mCharactersListAdapter = new CharacterListAdapter(getActivity(), mCharacterList);
+            mCharacters = new ArrayList<>();
+            mCharactersAdapter = new CharacterListAdapter(getActivity(), mCharacters);
 
             new PopulateCharacterListTask().execute();
         }
@@ -73,11 +72,11 @@ public class CharacterListFragment extends Fragment {
         gameLogoView.setImageDrawable(MediaUtils.getDrawableFromAssets(getActivity(), mGame.getGameLogoPath()));
         gameLogoView.setTransitionName(mTransitionNames[1]);
 
-        final TextView gameTitleView = (TextView) v.findViewById(R.id.game_card_title);
+        TextView gameTitleView = (TextView) v.findViewById(R.id.game_card_title);
         gameTitleView.setText(mGame.getGameName());
         gameTitleView.setTransitionName(mTransitionNames[2]);
 
-        final ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
+        ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
         imageButton.setTransitionName(mTransitionNames[3]);
 
         View.OnClickListener clickListener = new View.OnClickListener() {
@@ -91,12 +90,13 @@ public class CharacterListFragment extends Fragment {
         imageButton.setOnClickListener(clickListener);
 
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
-        recList.addItemDecoration(new DividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_list_divider), true, true));
+        recList.setHasFixedSize(true);
+        recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         recList.setTransitionGroup(true);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        recList.setAdapter(mCharactersListAdapter);
+        recList.setAdapter(mCharactersAdapter);
 
         return v;
     }
@@ -111,9 +111,9 @@ public class CharacterListFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Character> result) {
             if (result != null) {
-                mCharacterList.clear();
-                mCharacterList.addAll(result);
-                mCharactersListAdapter.notifyDataSetChanged();
+                mCharacters.clear();
+                mCharacters.addAll(result);
+                mCharactersAdapter.notifyDataSetChanged();
             }
         }
     }

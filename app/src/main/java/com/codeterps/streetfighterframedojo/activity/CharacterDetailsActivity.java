@@ -1,24 +1,32 @@
 package com.codeterps.streetfighterframedojo.activity;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
+import com.codeterps.streetfighterframedojo.adapter.CharacterViewPagerAdapter;
+import com.codeterps.streetfighterframedojo.data.DatabaseHelper;
 import com.codeterps.streetfighterframedojo.model.Character;
+import com.codeterps.streetfighterframedojo.ui.SlidingTabLayout;
 import com.codeterps.streetfighterframedojo.util.MediaUtils;
-import com.melnykov.fab.FloatingActionButton;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+
+import java.sql.SQLException;
 
 public class CharacterDetailsActivity extends ActionBarActivity {
 
-    public static final String ARG_CHAR = "character";
+    public static final String ARG_CHARACTER = "character";
+
+    private DatabaseHelper mDbHelper;
 
     private Character mCharacter;
 
@@ -26,14 +34,15 @@ public class CharacterDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.character_details_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_theme_color_dark));
 
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
-            mCharacter = (Character) b.getSerializable(ARG_CHAR);
+            mCharacter = (Character) b.getSerializable(ARG_CHARACTER);
 
             ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
             characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this,
@@ -44,6 +53,8 @@ public class CharacterDetailsActivity extends ActionBarActivity {
 
             Bitmap characterBitmap = MediaUtils.getBitmapFromDrawable(characterImage.getDrawable());
             Palette.generateAsync(characterBitmap, getPaletteAsyncListener());
+
+            new UpdateCharacterTask().execute();
         }
     }
 
@@ -60,26 +71,35 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                 }
 
                 if (primarySwatch != null && darkPrimarySwatch != null) {
-                    View headerLayout = findViewById(R.id.character_header_layout);
-                    headerLayout.setBackgroundColor(primarySwatch.getRgb());
+                    View header = findViewById(R.id.character_details_header);
+                    header.setBackgroundColor(primarySwatch.getRgb());
+
+                    SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
+                    tabs.setBackgroundColor(primarySwatch.getRgb());
+                    tabs.setTextColor(primarySwatch.getTitleTextColor());
+
                     TextView characterName = (TextView) findViewById(R.id.character_item_name);
                     characterName.setTextColor(primarySwatch.getTitleTextColor());
 
-                    FloatingActionButton characterMatchupFab = (FloatingActionButton) findViewById(R.id.character_matchup_fab);
-                    characterMatchupFab.setColorNormal(darkPrimarySwatch.getRgb());
-                    characterMatchupFab.setColorPressed(primarySwatch.getRgb());
-                    characterMatchupFab.setColorRipple(darkPrimarySwatch.getTitleTextColor());
+                    final int tabIndicatorColor = darkPrimarySwatch.getRgb();
+                    tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                        @Override
+                        public int getIndicatorColor(int position) {
+                            return tabIndicatorColor;
+                        }
+                    });
+
+                    getWindow().setStatusBarColor(darkPrimarySwatch.getRgb());
                 }
             }
         };
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_default, menu);
-        return true;
+    private DatabaseHelper getDbHelper() {
+        if (mDbHelper == null) {
+            mDbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+        }
+        return mDbHelper;
     }
 
     @Override
@@ -92,4 +112,40 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mDbHelper != null) {
+            OpenHelperManager.releaseHelper();
+            mDbHelper = null;
+        }
+    }
+
+    private class UpdateCharacterTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                getDbHelper().getCharacterDao().refresh(mCharacter);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            CharacterViewPagerAdapter mViewPagerAdapter = new CharacterViewPagerAdapter(getSupportFragmentManager(), mCharacter);
+
+            ViewPager viewPager = (ViewPager) findViewById(R.id.character_details_pager);
+            viewPager.setAdapter(mViewPagerAdapter);
+
+            SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
+            tabs.setDistributeEvenly(true);
+            tabs.setViewPager(viewPager);
+
+        }
+    }
 }
+
+

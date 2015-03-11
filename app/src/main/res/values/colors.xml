@@ -5,6 +5,7 @@
     <color name="primary_theme_color_light">#F81717</color>
     <color name="primary_theme_color_dark">#7D0000</color>
     <color name="background_light">#EDEDED</color>
+    <color name="background_dark">#BFBFBF</color>
     <color name="dark_text_color">#505050</color>
     <color name="tranparent_grey">#66505050</color>
 </resources>

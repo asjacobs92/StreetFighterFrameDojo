@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/character_details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -17,14 +17,14 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/character_details_toolbar">
 
         <!-- The main content view -->
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"/>
+            android:layout_below="@+id/character_details_toolbar"/>
 
         <!-- The navigation drawer -->
         <RelativeLayout

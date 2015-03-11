@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
         setEnterTransition(new Slide());
 
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.game_card_list);
+        recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);

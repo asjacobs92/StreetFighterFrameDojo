@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.character_details_toolbar);
         setSupportActionBar(toolbar);
 
         mTitle = mDrawerTitle = getTitle();

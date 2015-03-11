@@ -1,33 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fab="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background_light"
                 tools:context="com.codeterps.streetfighterframedojo.activity.CharacterDetailsActivity">
 
-    <RelativeLayout
-        android:id="@+id/character_header_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/character_header_layout"
+            android:id="@+id/character_details_header"
             android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentStart="true"
-            android:background="@color/primary_theme_color">
+            android:layout_height="150dp"
+            android:background="@color/primary_theme_color"
+            android:elevation="@dimen/default_elevation">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/character_details_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:background="@android:color/transparent"
+                android:minHeight="?attr/actionBarSize"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/character_item_image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
+                android:layout_above="@+id/character_details_toolbar"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="22dp"
-                android:layout_marginStart="25dp"
-                android:padding="5dp"
                 android:src="@drawable/ken"
                 android:transitionName="character_item_image"/>
 
@@ -35,52 +42,42 @@
                 android:id="@+id/character_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/character_item_image"
-                android:layout_marginBottom="17dp"
-                android:layout_marginStart="28dp"
-                android:layout_toEndOf="@+id/character_item_image"
+                android:layout_below="@id/character_item_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:text="Ken"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/accent_theme_color"
                 android:transitionName="character_item_name"/>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@android:color/transparent"
-                android:minHeight="?attr/actionBarSize"/>
-
         </RelativeLayout>
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/character_matchup_fab"
-            android:layout_width="wrap_content"
+        <com.codeterps.streetfighterframedojo.ui.SlidingTabLayout
+            android:id="@+id/character_details_tabs"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginTop="173dp"
-            android:src="@drawable/ic_action_gamepad"
-            fab:fab_colorNormal="@color/primary_theme_color_dark"
-            fab:fab_colorPressed="@color/primary_theme_color"
-            fab:fab_colorRipple="@color/accent_theme_color"/>
-    </RelativeLayout>
+            android:background="@color/primary_theme_color"
+            android:elevation="@dimen/default_elevation"/>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/character_details_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/textView"
+    </LinearLayout>
+
+    <!--<com.melnykov.fab.FloatingActionButton
+        android:id="@+id/character_matchup_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/character_header_container"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="13dp"
-        android:text="Data goes here"
-        android:textColor="@color/dark_text_color"/>
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_action_new"
+        fab:fab_colorNormal="@color/primary_theme_color_dark"
+        fab:fab_colorPressed="@color/primary_theme_color"
+        fab:fab_colorRipple="@color/accent_theme_color"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>-->
 
 </RelativeLayout>

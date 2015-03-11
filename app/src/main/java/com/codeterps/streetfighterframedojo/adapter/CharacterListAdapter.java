@@ -46,7 +46,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CharacterDetailsActivity.class);
                 Bundle args = new Bundle();
-                args.putSerializable(CharacterDetailsActivity.ARG_CHAR, getItem(position));
+                args.putSerializable(CharacterDetailsActivity.ARG_CHARACTER, getItem(position));
                 intent.putExtras(args);
                 ActivityOptions options = ActivityOptions
                         .makeSceneTransitionAnimation((Activity) mContext,
