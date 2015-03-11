@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class CharacterAttributesFragment extends Fragment {
 
     private static final String ARG_ATTRIBUTES = "attributes";
-    private static final int GRID_LAYOUT_SPAN_COUNT = 3;
+    private static final int GRID_LAYOUT_SPAN_COUNT = 2;
 
     private ArrayList<Attribute> mAttributes;
     private AttributeListAdapter mAttributesAdapter;

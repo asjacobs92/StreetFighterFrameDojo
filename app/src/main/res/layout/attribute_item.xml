@@ -32,6 +32,6 @@
         android:layout_marginRight="10dp"
         android:text="Value"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/dark_text_color"/>
+        android:textColor="@color/dark_text_color"
+        android:textSize="32sp"/>
 </RelativeLayout>

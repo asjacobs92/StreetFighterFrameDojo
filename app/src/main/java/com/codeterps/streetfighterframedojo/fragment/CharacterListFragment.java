@@ -91,9 +91,9 @@ public class CharacterListFragment extends Fragment {
 
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
         recList.setHasFixedSize(true);
+        recList.setTransitionGroup(true);
         recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        recList.setTransitionGroup(true);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         recList.setAdapter(mCharactersAdapter);

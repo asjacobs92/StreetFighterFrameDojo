@@ -70,11 +70,11 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                     darkPrimarySwatch = palette.getDarkMutedSwatch();
                 }
 
+                SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
                 if (primarySwatch != null && darkPrimarySwatch != null) {
                     View header = findViewById(R.id.character_details_header);
                     header.setBackgroundColor(primarySwatch.getRgb());
 
-                    SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
                     tabs.setBackgroundColor(primarySwatch.getRgb());
                     tabs.setTextColor(primarySwatch.getTitleTextColor());
 
@@ -90,6 +90,13 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                     });
 
                     getWindow().setStatusBarColor(darkPrimarySwatch.getRgb());
+                } else {
+                    tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                        @Override
+                        public int getIndicatorColor(int position) {
+                            return getResources().getColor(R.color.primary_theme_color_dark);
+                        }
+                    });
                 }
             }
         };
