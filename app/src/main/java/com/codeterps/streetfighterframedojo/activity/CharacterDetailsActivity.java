@@ -1,7 +1,6 @@
 package com.codeterps.streetfighterframedojo.activity;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -43,19 +42,35 @@ public class CharacterDetailsActivity extends ActionBarActivity {
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
             mCharacter = (Character) b.getSerializable(ARG_CHARACTER);
+            try {
+                updateCharacterDao();
 
-            ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
-            characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this,
-                    MediaUtils.getCharPortraitUri(mCharacter.getGame().getGameName(), mCharacter.getCharacterName())));
+                CharacterViewPagerAdapter viewPagerAdapter = new CharacterViewPagerAdapter(getSupportFragmentManager(), mCharacter);
 
-            TextView characterName = (TextView) findViewById(R.id.character_item_name);
-            characterName.setText(mCharacter.getCharacterName());
+                ViewPager viewPager = (ViewPager) findViewById(R.id.character_details_pager);
+                viewPager.setAdapter(viewPagerAdapter);
 
-            Bitmap characterBitmap = MediaUtils.getBitmapFromDrawable(characterImage.getDrawable());
-            Palette.generateAsync(characterBitmap, getPaletteAsyncListener());
+                SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
+                tabs.setDistributeEvenly(true);
+                tabs.setViewPager(viewPager);
 
-            new UpdateCharacterTask().execute();
+                ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
+                characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this,
+                        MediaUtils.getCharPortraitUri(mCharacter.getGame().getGameName(), mCharacter.getCharacterName())));
+
+                TextView characterName = (TextView) findViewById(R.id.character_item_name);
+                characterName.setText(mCharacter.getCharacterName());
+
+                Bitmap characterBitmap = MediaUtils.getBitmapFromDrawable(characterImage.getDrawable());
+                Palette.generateAsync(characterBitmap, getPaletteAsyncListener());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private void updateCharacterDao() throws SQLException {
+        getDbHelper().getCharacterDao().refresh(mCharacter);
     }
 
     private Palette.PaletteAsyncListener getPaletteAsyncListener() {
@@ -81,7 +96,7 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                     TextView characterName = (TextView) findViewById(R.id.character_item_name);
                     characterName.setTextColor(primarySwatch.getTitleTextColor());
 
-                    final int tabIndicatorColor = darkPrimarySwatch.getRgb();
+                    final int tabIndicatorColor = primarySwatch.getTitleTextColor();
                     tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
                         @Override
                         public int getIndicatorColor(int position) {
@@ -90,13 +105,6 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                     });
 
                     getWindow().setStatusBarColor(darkPrimarySwatch.getRgb());
-                } else {
-                    tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-                        @Override
-                        public int getIndicatorColor(int position) {
-                            return getResources().getColor(R.color.primary_theme_color_dark);
-                        }
-                    });
                 }
             }
         };
@@ -128,7 +136,7 @@ public class CharacterDetailsActivity extends ActionBarActivity {
             mDbHelper = null;
         }
     }
-
+ /*
     private class UpdateCharacterTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -142,17 +150,9 @@ public class CharacterDetailsActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            CharacterViewPagerAdapter mViewPagerAdapter = new CharacterViewPagerAdapter(getSupportFragmentManager(), mCharacter);
-
-            ViewPager viewPager = (ViewPager) findViewById(R.id.character_details_pager);
-            viewPager.setAdapter(mViewPagerAdapter);
-
-            SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.character_details_tabs);
-            tabs.setDistributeEvenly(true);
-            tabs.setViewPager(viewPager);
-
+            mViewPagerAdapter.notifyDataSetChanged();
         }
-    }
+    }*/
 }
 
 

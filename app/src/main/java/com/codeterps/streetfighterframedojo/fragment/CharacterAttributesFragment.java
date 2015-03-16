@@ -53,6 +53,12 @@ public class CharacterAttributesFragment extends Fragment {
         recList.setHasFixedSize(true);
         recList.addItemDecoration(new GridDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
         GridLayoutManager glm = new GridLayoutManager(getActivity(), GRID_LAYOUT_SPAN_COUNT);
+        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return (position == 0) ? 2 : 1;
+            }
+        });
         recList.setLayoutManager(glm);
         recList.setAdapter(mAttributesAdapter);
 
