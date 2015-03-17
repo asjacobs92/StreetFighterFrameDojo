@@ -52,11 +52,6 @@ public class CharacterListFragment extends Fragment {
         if (getArguments() != null) {
             mGame = (Game) getArguments().getSerializable(ARG_GAME);
             mTransitionNames = getArguments().getStringArray(ARG_TRANSITION_NAMES);
-
-            mCharacters = new ArrayList<>();
-            mCharactersAdapter = new CharacterListAdapter(getActivity(), mCharacters);
-
-            new PopulateCharacterListTask().execute();
         }
     }
 
@@ -64,6 +59,11 @@ public class CharacterListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setExitTransition(new Slide());
+
+        mCharacters = new ArrayList<>();
+        mCharactersAdapter = new CharacterListAdapter(getActivity(), mCharacters);
+
+        new PopulateCharacterListTask().execute();
 
         View v = inflater.inflate(R.layout.fragment_character_list, container, false);
         v.setTransitionName(mTransitionNames[0]);
@@ -79,6 +79,15 @@ public class CharacterListFragment extends Fragment {
         ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
         imageButton.setTransitionName(mTransitionNames[3]);
 
+        RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
+        recList.setHasFixedSize(true);
+        recList.setTransitionGroup(true);
+        recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        recList.setAdapter(mCharactersAdapter);
+
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,15 +97,6 @@ public class CharacterListFragment extends Fragment {
 
         v.setOnClickListener(clickListener);
         imageButton.setOnClickListener(clickListener);
-
-        RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
-        recList.setHasFixedSize(true);
-        recList.setTransitionGroup(true);
-        recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        recList.setAdapter(mCharactersAdapter);
 
         return v;
     }

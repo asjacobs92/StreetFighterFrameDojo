@@ -15,6 +15,9 @@ import com.codeterps.streetfighterframedojo.model.Matchup;
 import com.codeterps.streetfighterframedojo.model.MatchupNoteVote;
 import com.codeterps.streetfighterframedojo.model.MatchupOutcomeVote;
 import com.codeterps.streetfighterframedojo.model.Move;
+import com.codeterps.streetfighterframedojo.model.MoveStreetFighter2;
+import com.codeterps.streetfighterframedojo.model.MoveStreetFighter3;
+import com.codeterps.streetfighterframedojo.model.MoveStreetFighter4;
 import com.codeterps.streetfighterframedojo.model.PersonalCharacterNote;
 import com.codeterps.streetfighterframedojo.model.PersonalMatchupNote;
 import com.codeterps.streetfighterframedojo.model.PublicCharacterNote;
@@ -54,6 +57,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<MatchupNoteVote, Integer> mMatchupNoteVoteDao;
     private Dao<MatchupOutcomeVote, Integer> mMatchupOutcomeVoteDao;
     private Dao<Move, Integer> mMoveDao;
+    private Dao<MoveStreetFighter2, Integer> mMoveStreetFighter2Dao;
+    private Dao<MoveStreetFighter3, Integer> mMoveStreetFighter3Dao;
+    private Dao<MoveStreetFighter4, Integer> mMoveStreetFighter4Dao;
     private Dao<PersonalCharacterNote, Integer> mPersonalCharacterNoteDao;
     private Dao<PersonalMatchupNote, Integer> mPersonalMatchupNoteDao;
     private Dao<PublicCharacterNote, Integer> mPublicCharacterNoteDao;
@@ -79,6 +85,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, MatchupNoteVote.class);
             TableUtils.createTable(connectionSource, MatchupOutcomeVote.class);
             TableUtils.createTable(connectionSource, Move.class);
+            TableUtils.createTable(connectionSource, MoveStreetFighter2.class);
+            TableUtils.createTable(connectionSource, MoveStreetFighter3.class);
+            TableUtils.createTable(connectionSource, MoveStreetFighter4.class);
             TableUtils.createTable(connectionSource, PersonalCharacterNote.class);
             TableUtils.createTable(connectionSource, PersonalMatchupNote.class);
             TableUtils.createTable(connectionSource, PublicCharacterNote.class);
@@ -103,6 +112,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, MatchupNoteVote.class, true);
             TableUtils.dropTable(connectionSource, MatchupOutcomeVote.class, true);
             TableUtils.dropTable(connectionSource, Move.class, true);
+            TableUtils.dropTable(connectionSource, MoveStreetFighter2.class, true);
+            TableUtils.dropTable(connectionSource, MoveStreetFighter3.class, true);
+            TableUtils.dropTable(connectionSource, MoveStreetFighter4.class, true);
             TableUtils.dropTable(connectionSource, PersonalCharacterNote.class, true);
             TableUtils.dropTable(connectionSource, PersonalMatchupNote.class, true);
             TableUtils.dropTable(connectionSource, PublicCharacterNote.class, true);
@@ -255,7 +267,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         outs.close();
         in.close();
     }
-
     //.. HERE.
 
     public Dao<Attribute, Integer> getAttributeDao() throws SQLException {
@@ -321,9 +332,30 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return mMoveDao;
     }
 
+    public Dao<MoveStreetFighter2, Integer> getmMoveStreetFighter2Dao() throws SQLException {
+        if (mMoveStreetFighter2Dao == null) {
+            mMoveStreetFighter2Dao = getDao(MoveStreetFighter2.class);
+        }
+        return mMoveStreetFighter2Dao;
+    }
+
+    public Dao<MoveStreetFighter3, Integer> getmMoveStreetFighter3Dao() throws SQLException {
+        if (mMoveStreetFighter3Dao == null) {
+            mMoveStreetFighter3Dao = getDao(MoveStreetFighter3.class);
+        }
+        return mMoveStreetFighter3Dao;
+    }
+
+    public Dao<MoveStreetFighter4, Integer> getmMoveStreetFighter4Dao() throws SQLException {
+        if (mMoveStreetFighter4Dao == null) {
+            mMoveStreetFighter4Dao = getDao(MoveStreetFighter4.class);
+        }
+        return mMoveStreetFighter4Dao;
+    }
+
     public Dao<PersonalCharacterNote, Integer> getPersonalCharacterNoteDao() throws SQLException {
-        if (mMatchupOutcomeVoteDao == null) {
-            mMatchupOutcomeVoteDao = getDao(MatchupOutcomeVote.class);
+        if (mPersonalCharacterNoteDao == null) {
+            mPersonalCharacterNoteDao = getDao(PersonalCharacterNote.class);
         }
         return mPersonalCharacterNoteDao;
     }

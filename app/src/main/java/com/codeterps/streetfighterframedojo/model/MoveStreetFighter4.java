@@ -8,7 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "moveStreetFighter4")
-public class MoveStreetFighter4 extends Move {
+public class MoveStreetFighter4 {
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -50,12 +50,10 @@ public class MoveStreetFighter4 extends Move {
     @DatabaseField
     private String juggleInfo;
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
