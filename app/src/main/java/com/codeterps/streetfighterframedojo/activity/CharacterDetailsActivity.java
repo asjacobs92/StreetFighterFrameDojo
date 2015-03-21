@@ -55,8 +55,7 @@ public class CharacterDetailsActivity extends ActionBarActivity {
                 tabs.setViewPager(viewPager);
 
                 ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
-                characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this,
-                        MediaUtils.getCharPortraitUri(mCharacter.getGame().getGameName(), mCharacter.getCharacterName())));
+                characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this, mCharacter.getCharacterImagePath()));
 
                 TextView characterName = (TextView) findViewById(R.id.character_item_name);
                 characterName.setText(mCharacter.getCharacterName());

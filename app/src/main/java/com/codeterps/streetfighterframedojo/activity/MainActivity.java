@@ -1,5 +1,6 @@
 package com.codeterps.streetfighterframedojo.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -15,22 +16,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.NavDrawerAdapter;
 import com.codeterps.streetfighterframedojo.fragment.HomeFragment;
 import com.codeterps.streetfighterframedojo.model.NavDrawerItem;
+import com.codeterps.streetfighterframedojo.util.SessionManager;
 
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
+    private SessionManager mSessionManager;
+
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mDrawerListLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private Button mLoginButton;
+    private Button mProfileButton;
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -42,12 +50,37 @@ public class MainActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.character_details_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerListLayout = (RelativeLayout) findViewById(R.id.drawer_list_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list);
+        mDrawerToggle = getActionBarDrawerToggle();
+        mLoginButton = (Button) findViewById(R.id.account_sign_in_button);
+        mProfileButton = (Button) findViewById(R.id.account_profile_button);
 
+        initDrawerLayout();
+        initProfileView();
+        setLoginButtonListener();
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
+    }
+
+    private void initProfileView() {
+        if (getSessionManager().isLoggedIn()) {
+            mLoginButton.setVisibility(View.GONE);
+            mProfileButton.setVisibility(View.VISIBLE);
+
+            TextView usernameView = (TextView) findViewById(R.id.account_profile_username);
+            usernameView.setText(getSessionManager().getCurrentUser().get(SessionManager.KEY_USERNAME));
+        }
+    }
+
+    private void initDrawerLayout() {
         String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
@@ -63,14 +96,21 @@ public class MainActivity extends ActionBarActivity {
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new NavDrawerAdapter(this, navDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
 
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+    private void setLoginButtonListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
+    private ActionBarDrawerToggle getActionBarDrawerToggle() {
+        return new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
@@ -86,11 +126,6 @@ public class MainActivity extends ActionBarActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if (savedInstanceState == null) {
-            selectItem(0);
-        }
     }
 
     @Override
@@ -157,6 +192,13 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    private SessionManager getSessionManager() {
+        if (mSessionManager == null) {
+            mSessionManager = new SessionManager(this);
+        }
+        return mSessionManager;
+    }
+
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -164,6 +206,4 @@ public class MainActivity extends ActionBarActivity {
             selectItem(position);
         }
     }
-
-
 }

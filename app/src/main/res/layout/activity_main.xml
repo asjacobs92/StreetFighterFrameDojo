@@ -1,23 +1,24 @@
-<RelativeLayout
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/character_details_toolbar">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/character_details_toolbar"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/AppTheme"/>
+        android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/character_details_toolbar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/character_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/AppTheme"/>
 
         <!-- The main content view -->
         <FrameLayout
@@ -26,72 +27,88 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/character_details_toolbar"/>
 
-        <!-- The navigation drawer -->
+    </LinearLayout>
+
+    <!-- The navigation drawer -->
+    <RelativeLayout
+        android:id="@+id/drawer_list_layout"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/primary_material_dark">
+        <!-- android:layout_gravity="start"-->
+
         <RelativeLayout
-            android:id="@+id/drawer_list_layout"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/primary_material_dark">
+            android:id="@+id/profile_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_theme_color">
 
-            <RelativeLayout
-                android:id="@+id/profile_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary_theme_color">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/account_profile_pic"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="21dp"
+                android:src="@drawable/ic_action_person"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/account_profile_pic"
-                    android:layout_width="86dp"
-                    android:layout_height="86dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginTop="21dp"
-                    android:src="@drawable/ken"/>
-
-                <TextView
-                    android:id="@+id/account_profile_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/account_profile_pic"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/username"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-                <Button
-                    android:id="@+id/account_profile_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/account_profile_username"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
-                    android:background="@android:color/transparent"
-                    android:minHeight="12dp"
-                    android:minWidth="48dp"
-                    android:text="@string/see_profile"
-                    android:textAllCaps="false"
-                    android:textSize="12sp"/>
-
-            </RelativeLayout>
-
-            <ListView
-                android:id="@+id/left_drawer_list"
+            <TextView
+                android:id="@+id/account_profile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/profile_layout"
-                android:layout_gravity="center_horizontal|top"
+                android:layout_below="@+id/account_profile_pic"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"/>
+                android:text="@string/not_signed_in"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+            <Button
+                android:id="@+id/account_profile_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/account_profile_username"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:elevation="@dimen/default_elevation"
+                android:minHeight="12dp"
+                android:minWidth="48dp"
+                android:text="@string/see_profile"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/account_sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/account_profile_username"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:elevation="@dimen/default_elevation"
+                android:minHeight="12dp"
+                android:minWidth="48dp"
+                android:text="@string/action_sign_in"
+                android:textAllCaps="false"
+                android:textSize="12sp"/>
         </RelativeLayout>
 
+        <ListView
+            android:id="@+id/left_drawer_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/profile_layout"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="15dp"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"/>
 
-    </android.support.v4.widget.DrawerLayout>
-    <!-- android:layout_gravity="start"-->
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
+

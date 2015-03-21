@@ -15,9 +15,9 @@ public class SessionManager {
     // User password (make variable public to access from outside)
     public static final String KEY_PASSWORD = "password";
     // Sharedpref file name
-    private static final String PREF_NAME = "frameDojoPref";
+    private static final String PREF_NAME = "frame_dojo_pref";
     // All Shared Preferences Keys
-    private static final String IS_LOGIN = "isLoggedIn";
+    private static final String IS_LOGIN = "is_logged_in";
     // Shared pref mode
     private static final int PRIVATE_MODE = 0;
 

@@ -57,8 +57,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         });
 
         holder.mTextView.setText(getItem(position).getCharacterName());
-        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext,
-                MediaUtils.getCharPortraitUri(getItem(position).getGame().getGameName(), getItem(position).getCharacterName())));
+        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, getItem(position).getCharacterImagePath()));
     }
 
     @Override
