@@ -50,7 +50,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
         holder.itemView.setTransitionName(transitionNames[0]);
 
-
         holder.mTextView.setText(mDataset.get(position).getGameName());
         holder.mTextView.setTransitionName(transitionNames[2]);
 
@@ -58,12 +57,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         holder.mImageView.setTransitionName(transitionNames[1]);
         holder.mFab.setTransitionName(transitionNames[3]);
 
-        View.OnClickListener clickListener = getOnViewClickListener(holder, position, transitionNames);
+        View.OnClickListener clickListener = getOnGameClickListener(holder, position, transitionNames);
         holder.mFab.setOnClickListener(clickListener);
         holder.itemView.setOnClickListener(clickListener);
     }
 
-    private View.OnClickListener getOnViewClickListener(final ViewHolder holder, final int position, final String[] transitionNames) {
+    private View.OnClickListener getOnGameClickListener(final ViewHolder holder, final int position, final String[] transitionNames) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {

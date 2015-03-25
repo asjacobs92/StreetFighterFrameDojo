@@ -1,5 +1,7 @@
 package com.codeterps.streetfighterframedojo.activity;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -11,12 +13,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
     private RelativeLayout mDrawerListLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+
     private Button mLoginButton;
     private Button mProfileButton;
 
@@ -48,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.character_details_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -58,25 +63,42 @@ public class MainActivity extends ActionBarActivity {
         mDrawerListLayout = (RelativeLayout) findViewById(R.id.drawer_list_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list);
         mDrawerToggle = getActionBarDrawerToggle();
+
         mLoginButton = (Button) findViewById(R.id.account_sign_in_button);
         mProfileButton = (Button) findViewById(R.id.account_profile_button);
 
         initDrawerLayout();
         initProfileView();
         setLoginButtonListener();
+        setProfileButtonListener();
 
         if (savedInstanceState == null) {
             selectItem(0);
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initProfileView();
+    }
+
     private void initProfileView() {
+        TextView usernameView = (TextView) findViewById(R.id.account_profile_username);
+        ImageView profilePicView = (ImageView) findViewById(R.id.account_profile_pic);
+
         if (getSessionManager().isLoggedIn()) {
             mLoginButton.setVisibility(View.GONE);
             mProfileButton.setVisibility(View.VISIBLE);
 
-            TextView usernameView = (TextView) findViewById(R.id.account_profile_username);
             usernameView.setText(getSessionManager().getCurrentUser().get(SessionManager.KEY_USERNAME));
+            profilePicView.setImageDrawable(getResources().getDrawable(R.drawable.ken, null));
+        } else {
+            mLoginButton.setVisibility(View.VISIBLE);
+            mProfileButton.setVisibility(View.GONE);
+
+            usernameView.setText(getResources().getString(R.string.not_signed_in));
+            profilePicView.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_person, null));
         }
     }
 
@@ -103,8 +125,23 @@ public class MainActivity extends ActionBarActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                        (Activity) v.getContext()).toBundle());
+            }
+        });
+    }
+
+    private void setProfileButtonListener() {
+        mProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ProfileActivity.class);
+                ActivityOptions options = ActivityOptions
+                        .makeSceneTransitionAnimation((Activity) v.getContext(),
+                                Pair.create(findViewById(R.id.account_profile_pic), "profile_pic"),
+                                Pair.create(findViewById(R.id.account_profile_username), "profile_username"));
+                startActivity(intent, options.toBundle());
             }
         });
     }
@@ -188,7 +225,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggle
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 

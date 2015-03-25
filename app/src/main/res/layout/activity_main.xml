@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/character_details_toolbar">
+    android:layout_below="@+id/toolbar">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,11 +12,9 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/character_details_toolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/AppTheme"/>
 
@@ -25,7 +23,7 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/character_details_toolbar"/>
+            android:layout_below="@+id/toolbar"/>
 
     </LinearLayout>
 
@@ -35,7 +33,8 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/primary_material_dark">
+        android:background="@color/primary_material_dark"
+        android:clickable="true">
         <!-- android:layout_gravity="start"-->
 
         <RelativeLayout
@@ -46,13 +45,14 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/account_profile_pic"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_width="92dp"
+                android:layout_height="92dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_marginTop="21dp"
-                android:src="@drawable/ic_action_person"/>
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_action_person"
+                android:transitionName="profile_pic"/>
 
             <TextView
                 android:id="@+id/account_profile_username"
@@ -60,10 +60,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/account_profile_pic"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:text="@string/not_signed_in"
                 android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:transitionName="profile_username"/>
 
             <Button
                 android:id="@+id/account_profile_button"
@@ -71,14 +72,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/account_profile_username"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
-                android:elevation="@dimen/default_elevation"
                 android:minHeight="12dp"
                 android:minWidth="48dp"
-                android:text="@string/see_profile"
+                android:text="@string/action_see_profile"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:visibility="gone"/>
 
             <Button
@@ -87,14 +88,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/account_profile_username"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
-                android:elevation="@dimen/default_elevation"
                 android:minHeight="12dp"
                 android:minWidth="48dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_sign_in_long"
                 android:textAllCaps="false"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
         </RelativeLayout>
 
         <ListView

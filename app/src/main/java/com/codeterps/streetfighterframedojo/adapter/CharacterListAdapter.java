@@ -41,7 +41,14 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(getOnCharacterClickListener(position));
+        holder.mTextView.setText(getItem(position).getCharacterName());
+        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext,
+                getItem(position).getCharacterImagePath()));
+    }
+
+    private View.OnClickListener getOnCharacterClickListener(final int position) {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CharacterDetailsActivity.class);
@@ -54,10 +61,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
                                 Pair.create(v.findViewById(R.id.character_item_image), "character_item_image"));
                 mContext.startActivity(intent, options.toBundle());
             }
-        });
-
-        holder.mTextView.setText(getItem(position).getCharacterName());
-        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, getItem(position).getCharacterImagePath()));
+        };
     }
 
     @Override
