@@ -22,10 +22,10 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private DatabaseHelper mDbHelper;
-
+    public PopulateGameListTask mPopulateListTask;
     private List<Game> mGameList;
     private GameListAdapter mGameListAdapter;
+    private DatabaseHelper mDbHelper;
 
     public HomeFragment() {
     }
@@ -33,8 +33,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGameList = new ArrayList<>();
-        mGameListAdapter = new GameListAdapter(getActivity(), mGameList);
+        setEnterTransition(new Slide());
+        setExitTransition(new Slide());
     }
 
     @Override
@@ -43,7 +43,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        setEnterTransition(new Slide());
+        mGameList = new ArrayList<>();
+        mGameListAdapter = new GameListAdapter(getActivity(), mGameList);
 
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.game_card_list);
         recList.setHasFixedSize(true);
@@ -52,19 +53,25 @@ public class HomeFragment extends Fragment {
         recList.setLayoutManager(llm);
         recList.setAdapter(mGameListAdapter);
 
-        setExitTransition(new Slide());
-        new PopulateGameListTask().execute();
-
         return v;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStart() {
+        super.onStart();
+        getPopulateCharacterListTask().execute();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         if (mDbHelper != null) {
             OpenHelperManager.releaseHelper();
             mDbHelper = null;
         }
+        mGameList = null;
+        mGameListAdapter = null;
     }
 
     private DatabaseHelper getDbHelper() {
@@ -72,6 +79,13 @@ public class HomeFragment extends Fragment {
             mDbHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
         }
         return mDbHelper;
+    }
+
+    public PopulateGameListTask getPopulateCharacterListTask() {
+        if (mPopulateListTask == null) {
+            mPopulateListTask = new PopulateGameListTask();
+        }
+        return mPopulateListTask;
     }
 
     private class PopulateGameListTask extends AsyncTask<Void, Void, ArrayList<Game>> {
@@ -90,6 +104,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Game> result) {
+            mPopulateListTask = null;
             if (result != null) {
                 mGameList.clear();
                 mGameList.addAll(result);

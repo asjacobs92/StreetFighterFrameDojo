@@ -40,6 +40,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codeterps.streetfighterframedojo.activity.MainActivity"/>
         </activity>
+        <activity
+            android:name=".activity.MatchupActivity"
+            android:label="@string/title_activity_matchup"
+            android:parentActivityName=".activity.CharacterDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeterps.streetfighterframedojo.activity.CharacterDetailsActivity"/>
+        </activity>
+        <activity
+            android:name=".activity.MoveDetailsActivity"
+            android:label="@string/title_activity_move_details"
+            android:parentActivityName=".activity.CharacterDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeterps.streetfighterframedojo.activity.CharacterDetailsActivity"/>
+        </activity>
     </application>
 
 </manifest>

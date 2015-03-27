@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="com.codeterps.streetfighterframedojo.activity.MatchupActivity">
+
+    <RelativeLayout
+        android:id="@+id/character_details_header"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="@color/primary_theme_color"
+        android:elevation="@dimen/default_elevation">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@drawable/recycler_view_divider"
+            android:dividerPadding="2dp"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            android:weightSum="1">
+
+            <include
+                layout="@layout/character_item_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5">
+
+                <Spinner
+                    android:id="@+id/matchup_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:dropDownWidth="96dp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/toolbar"/>
+
+</RelativeLayout>
+
+

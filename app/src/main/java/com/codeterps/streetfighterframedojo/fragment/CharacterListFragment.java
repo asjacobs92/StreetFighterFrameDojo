@@ -15,11 +15,14 @@ import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.CharacterListAdapter;
+import com.codeterps.streetfighterframedojo.data.DatabaseHelper;
 import com.codeterps.streetfighterframedojo.model.Character;
 import com.codeterps.streetfighterframedojo.model.Game;
 import com.codeterps.streetfighterframedojo.ui.ListDividerItemDecoration;
 import com.codeterps.streetfighterframedojo.util.MediaUtils;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +32,11 @@ public class CharacterListFragment extends Fragment {
     private static final String ARG_TRANSITION_NAMES = "transition_names";
 
     private Game mGame;
-    private String mTransitionNames[];
-
     private List<Character> mCharacters;
     private CharacterListAdapter mCharactersAdapter;
+
+    private DatabaseHelper mDbHelper;
+    private PopulateCharacterListTask mPopulateListTask;
 
     public CharacterListFragment() {
     }
@@ -43,73 +47,110 @@ public class CharacterListFragment extends Fragment {
         args.putSerializable(ARG_GAME, game);
         args.putStringArray(ARG_TRANSITION_NAMES, transitionNames);
         fragment.setArguments(args);
+        fragment.setEnterTransition(new Slide());
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mGame = (Game) getArguments().getSerializable(ARG_GAME);
-            mTransitionNames = getArguments().getStringArray(ARG_TRANSITION_NAMES);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setExitTransition(new Slide());
-
-        mCharacters = new ArrayList<>();
-        mCharactersAdapter = new CharacterListAdapter(getActivity(), mCharacters);
-
-        new PopulateCharacterListTask().execute();
-
         View v = inflater.inflate(R.layout.fragment_character_list, container, false);
-        v.setTransitionName(mTransitionNames[0]);
 
-        ImageView gameLogoView = (ImageView) v.findViewById(R.id.game_card_logo);
-        gameLogoView.setImageDrawable(MediaUtils.getDrawableFromAssets(getActivity(), mGame.getGameLogoPath()));
-        gameLogoView.setTransitionName(mTransitionNames[1]);
+        if (getArguments() != null) {
+            mGame = (Game) getArguments().getSerializable(ARG_GAME);
+            String transitionNames[] = getArguments().getStringArray(ARG_TRANSITION_NAMES);
 
-        TextView gameTitleView = (TextView) v.findViewById(R.id.game_card_title);
-        gameTitleView.setText(mGame.getGameName());
-        gameTitleView.setTransitionName(mTransitionNames[2]);
+            mCharacters = new ArrayList<>();
+            mCharactersAdapter = new CharacterListAdapter(getActivity(), mCharacters);
 
-        ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
-        imageButton.setTransitionName(mTransitionNames[3]);
+            ImageView gameLogoView = (ImageView) v.findViewById(R.id.game_card_logo);
+            TextView gameTitleView = (TextView) v.findViewById(R.id.game_card_title);
+            ImageButton imageButton = (ImageButton) v.findViewById(R.id.game_card_fab);
+            RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
 
-        RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_list);
-        recList.setHasFixedSize(true);
-        recList.setTransitionGroup(true);
-        recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        recList.setAdapter(mCharactersAdapter);
+            v.setTransitionName(transitionNames[0]);
+            gameLogoView.setTransitionName(transitionNames[1]);
+            gameTitleView.setTransitionName(transitionNames[2]);
+            imageButton.setTransitionName(transitionNames[3]);
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
+            gameTitleView.setText(mGame.getGameName());
+            gameLogoView.setImageDrawable(MediaUtils.getDrawableFromAssets(getActivity(), mGame.getGameLogoPath()));
+
+            recList.setHasFixedSize(true);
+            recList.setTransitionGroup(true);
+            recList.addItemDecoration(new ListDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider, null)));
+            LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            recList.setLayoutManager(llm);
+            recList.setAdapter(mCharactersAdapter);
+
+            View.OnClickListener clickListener = getOnViewClickListener();
+            v.setOnClickListener(clickListener);
+            imageButton.setOnClickListener(clickListener);
+        }
+
+        return v;
+    }
+
+    private View.OnClickListener getOnViewClickListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         };
+    }
 
-        v.setOnClickListener(clickListener);
-        imageButton.setOnClickListener(clickListener);
+    @Override
+    public void onStart() {
+        super.onStart();
+        getPopulateCharacterListTask().execute();
+    }
 
-        return v;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDbHelper != null) {
+            OpenHelperManager.releaseHelper();
+            mDbHelper = null;
+        }
+        mGame = null;
+        mCharacters = null;
+        mCharactersAdapter = null;
+    }
+
+    private PopulateCharacterListTask getPopulateCharacterListTask() {
+        if (mPopulateListTask == null) {
+            mPopulateListTask = new PopulateCharacterListTask();
+        }
+
+        return mPopulateListTask;
+    }
+
+    private DatabaseHelper getDbHelper() {
+        if (mDbHelper == null) {
+            mDbHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
+        }
+        return mDbHelper;
     }
 
     private class PopulateCharacterListTask extends AsyncTask<Void, Void, ArrayList<Character>> {
 
         @Override
         protected ArrayList<Character> doInBackground(Void... params) {
-            return new ArrayList<>(mGame.getGameCharacters());
+            ArrayList<Character> characterList = null;
+            try {
+                getDbHelper().getGameDao().refresh(mGame);
+                characterList = new ArrayList<>(mGame.getGameCharacters());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return characterList;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Character> result) {
+            mPopulateListTask = null;
             if (result != null) {
                 mCharacters.clear();
                 mCharacters.addAll(result);

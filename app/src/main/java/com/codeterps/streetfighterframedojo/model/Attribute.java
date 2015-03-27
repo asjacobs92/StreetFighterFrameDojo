@@ -3,12 +3,14 @@ package com.codeterps.streetfighterframedojo.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by FelipeIsrael on 1/9/2015.
  */
 
 @DatabaseTable(tableName = "attribute")
-public class Attribute {
+public class Attribute implements Serializable {
     @DatabaseField(generatedId = true)
     private int attributeId;
     @DatabaseField

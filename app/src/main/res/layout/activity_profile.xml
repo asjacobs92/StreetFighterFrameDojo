@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -15,13 +14,7 @@
         android:src="@drawable/ken"
         android:transitionName="profile_pic"/>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/tranparent_grey"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/AppTheme"/>
+    <include layout="@layout/toolbar"/>
 
     <View
         android:id="@+id/view"

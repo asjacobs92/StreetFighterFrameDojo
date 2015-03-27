@@ -35,35 +35,35 @@ public class CharacterAttributesFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mAttributes = (ArrayList<Attribute>) getArguments().getSerializable(ARG_ATTRIBUTES);
-            mAttributesAdapter = new AttributeListAdapter(getActivity(), mAttributes);
-        }
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_attributes, container, false);
 
-        RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_attribute_list);
-        recList.setHasFixedSize(true);
-        recList.addItemDecoration(new GridDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
-        GridLayoutManager glm = new GridLayoutManager(getActivity(), GRID_LAYOUT_SPAN_COUNT);
-        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return (position == 0) ? 2 : 1;
-            }
-        });
-        recList.setLayoutManager(glm);
-        recList.setAdapter(mAttributesAdapter);
+        if (getArguments() != null) {
+            mAttributes = (ArrayList<Attribute>) getArguments().getSerializable(ARG_ATTRIBUTES);
+            mAttributesAdapter = new AttributeListAdapter(mAttributes);
 
+            RecyclerView recList = (RecyclerView) v.findViewById(R.id.character_attribute_list);
+            recList.setHasFixedSize(true);
+            recList.addItemDecoration(new GridDividerItemDecoration(getActivity().getResources().getDrawable(R.drawable.recycler_view_divider)));
+            GridLayoutManager glm = new GridLayoutManager(getActivity(), GRID_LAYOUT_SPAN_COUNT);
+            glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return (position == 0) ? 2 : 1;
+                }
+            });
+            recList.setLayoutManager(glm);
+            recList.setAdapter(mAttributesAdapter);
+        }
         return v;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAttributes = null;
+        mAttributesAdapter = null;
+    }
 }

@@ -1,10 +1,9 @@
 package com.codeterps.streetfighterframedojo.adapter;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,60 +15,59 @@ import java.util.ArrayList;
 /**
  * Created by Arthur Jacobs on 1/19/2015.
  */
-public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
+public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
-    private ArrayList<NavDrawerItem> mNavDrawerItems;
+    private static OnItemClickListener mListener;
+    private ArrayList<NavDrawerItem> mDataset;
 
-    public NavDrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems) {
-        super(context, R.layout.nav_drawer_item, navDrawerItems);
-        this.mNavDrawerItems = navDrawerItems;
+    public NavDrawerAdapter(ArrayList<NavDrawerItem> myDataset) {
+        this.mDataset = myDataset;
     }
 
-    @Override
-    public int getCount() {
-        return mNavDrawerItems.size();
-    }
-
-    @Override
     public NavDrawerItem getItem(int position) {
-        return mNavDrawerItems.get(position);
+        return mDataset.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public int getItemCount() {
+        return mDataset.size();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            convertView = getLayoutInflater().inflate(R.layout.nav_drawer_item, parent, false);
-            holder = new ViewHolder();
-            holder.image = (ImageView) convertView.findViewById(R.id.nav_drawer_item_image);
-            holder.text = (TextView) convertView.findViewById(R.id.nav_drawer_item_text);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        holder.image.setImageResource(mNavDrawerItems.get(position).getIcon());
-        holder.text.setText(mNavDrawerItems.get(position).getTitle());
-
-        return convertView;
+    public NavDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.nav_drawer_item, parent, false);
+        return new ViewHolder(v);
     }
 
-    public LayoutInflater getLayoutInflater() {
-        if (mInflater == null) {
-            mInflater = LayoutInflater.from(getContext());
-        }
-        return mInflater;
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.mTextView.setText(getItem(position).getTitle());
+        holder.mImageView.setImageResource(getItem(position).getIcon());
     }
 
-    private static class ViewHolder {
-        ImageView image;
-        TextView text;
+    public void setOnItemClickListener(OnItemClickListener clickListener) {
+        mListener = clickListener;
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView mTextView;
+        public ImageView mImageView;
+
+
+        public ViewHolder(View v) {
+            super(v);
+            v.setOnClickListener(this);
+            mTextView = (TextView) v.findViewById(R.id.nav_drawer_item_text);
+            mImageView = (ImageView) v.findViewById(R.id.nav_drawer_item_image);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onItemClick(v, getAdapterPosition());
+        }
     }
 }

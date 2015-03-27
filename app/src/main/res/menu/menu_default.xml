@@ -1,5 +1,5 @@
 <menu
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.codeterps.streetfighterframedojo.activity.ProfileActivity">
+    tools:context="com.codeterps.streetfighterframedojo.activity.MatchupActivity">
 
 </menu>

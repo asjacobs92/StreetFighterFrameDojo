@@ -31,6 +31,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         mDataset = myDataset;
     }
 
+    public Game getItem(int position) {
+        return mDataset.get(position);
+    }
+
     @Override
     public GameListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_card, parent, false);
@@ -50,10 +54,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
         holder.itemView.setTransitionName(transitionNames[0]);
 
-        holder.mTextView.setText(mDataset.get(position).getGameName());
+        holder.mTextView.setText(getItem(position).getGameName());
         holder.mTextView.setTransitionName(transitionNames[2]);
 
-        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, mDataset.get(position).getGameLogoPath()));
+        holder.mImageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, getItem(position).getGameLogoPath()));
         holder.mImageView.setTransitionName(transitionNames[1]);
         holder.mFab.setTransitionName(transitionNames[3]);
 
@@ -66,7 +70,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharacterListFragment fragment = CharacterListFragment.newInstance(mDataset.get(position), transitionNames);
+                CharacterListFragment fragment = CharacterListFragment.newInstance(getItem(position), transitionNames);
                 fragment.setSharedElementEnterTransition(TransitionInflater.from(mContext).inflateTransition(R.transition.game_list_exit));
                 fragment.setEnterTransition(TransitionInflater.from(mContext).inflateTransition(R.transition.character_list_enter));
 

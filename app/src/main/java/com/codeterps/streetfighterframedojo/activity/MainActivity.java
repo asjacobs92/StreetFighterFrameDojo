@@ -12,17 +12,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
@@ -37,9 +37,9 @@ public class MainActivity extends ActionBarActivity {
 
     private SessionManager mSessionManager;
 
+    private RecyclerView mDrawerList;
     private DrawerLayout mDrawerLayout;
-    private RelativeLayout mDrawerListLayout;
-    private ListView mDrawerList;
+    private LinearLayout mDrawerListLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private Button mLoginButton;
@@ -60,8 +60,8 @@ public class MainActivity extends ActionBarActivity {
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerListLayout = (RelativeLayout) findViewById(R.id.drawer_list_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer_list);
+        mDrawerListLayout = (LinearLayout) findViewById(R.id.drawer_list_layout);
+        mDrawerList = (RecyclerView) findViewById(R.id.left_drawer_list);
         mDrawerToggle = getActionBarDrawerToggle();
 
         mLoginButton = (Button) findViewById(R.id.account_sign_in_button);
@@ -116,8 +116,18 @@ public class MainActivity extends ActionBarActivity {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new NavDrawerAdapter(this, navDrawerItems));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mDrawerList.setLayoutManager(llm);
+        NavDrawerAdapter adapter = new NavDrawerAdapter(navDrawerItems);
+        adapter.setOnItemClickListener(new NavDrawerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                selectItem(position);
+            }
+        });
+        mDrawerList.setAdapter(adapter);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
@@ -200,7 +210,6 @@ public class MainActivity extends ActionBarActivity {
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerListLayout);
     }
 
@@ -234,13 +243,5 @@ public class MainActivity extends ActionBarActivity {
             mSessionManager = new SessionManager(this);
         }
         return mSessionManager;
-    }
-
-    /* The click listner for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
     }
 }

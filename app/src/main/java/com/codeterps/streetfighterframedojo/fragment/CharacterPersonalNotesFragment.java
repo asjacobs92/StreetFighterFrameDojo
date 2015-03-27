@@ -42,4 +42,10 @@ public class CharacterPersonalNotesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_character_personal_notes, container, false);
         return v;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPersonalNotes = null;
+    }
 }

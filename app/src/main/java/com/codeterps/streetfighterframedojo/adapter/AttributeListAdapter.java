@@ -1,6 +1,5 @@
 package com.codeterps.streetfighterframedojo.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +16,9 @@ import java.util.List;
  */
 public class AttributeListAdapter extends RecyclerView.Adapter<AttributeListAdapter.ViewHolder> {
 
-    private Context mContext;
     private List<Attribute> mDataset;
 
-    public AttributeListAdapter(Context c, List<Attribute> myDataset) {
-        mContext = c;
+    public AttributeListAdapter(List<Attribute> myDataset) {
         mDataset = myDataset;
     }
 

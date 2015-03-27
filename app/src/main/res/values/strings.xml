@@ -4,6 +4,7 @@
     <string name="app_name">Street Fighter Frame Dojo</string>
 
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_matchup">Matchup Characters</string>
     <string name="title_activity_character_details">Character Details</string>
 
 
@@ -13,6 +14,7 @@
     <string name="action_sign_out">Sign out</string>
     <string name="action_see_profile"><u>See profile</u></string>
     <string name="action_sign_in_long"><u>Sign in or register</u></string>
+    <string name="action_matchup">Matchup</string>
 
     <array name="nav_drawer_items">
         <item>Home</item>
@@ -47,5 +49,6 @@
     <string name="title_activity_profile">Profile</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_move_details">MoveDetailsActivity</string>
 
 </resources>
