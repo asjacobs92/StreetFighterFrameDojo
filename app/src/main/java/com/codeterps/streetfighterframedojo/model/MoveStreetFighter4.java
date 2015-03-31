@@ -16,7 +16,7 @@ public class MoveStreetFighter4 {
     private Move move;
 
     @DatabaseField
-    private int meterGain;
+    private String meterGain;
     @DatabaseField
     private int blockStun;
     @DatabaseField
@@ -66,11 +66,11 @@ public class MoveStreetFighter4 {
         this.move = move;
     }
 
-    public int getMeterGain() {
+    public String getMeterGain() {
         return meterGain;
     }
 
-    public void setMeterGain(int meterGain) {
+    public void setMeterGain(String meterGain) {
         this.meterGain = meterGain;
     }
 

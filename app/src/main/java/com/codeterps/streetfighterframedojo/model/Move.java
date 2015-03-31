@@ -27,9 +27,9 @@ public class Move implements Serializable {
     private String type;
 
     @DatabaseField
-    private int damage;
+    private String damage;
     @DatabaseField
-    private int stun;
+    private String stun;
     @DatabaseField
     private String hitLevel;
     @DatabaseField
@@ -95,19 +95,19 @@ public class Move implements Serializable {
         this.type = type;
     }
 
-    public int getDamage() {
+    public String getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(String damage) {
         this.damage = damage;
     }
 
-    public int getStun() {
+    public String getStun() {
         return stun;
     }
 
-    public void setStun(int stun) {
+    public void setStun(String stun) {
         this.stun = stun;
     }
 
