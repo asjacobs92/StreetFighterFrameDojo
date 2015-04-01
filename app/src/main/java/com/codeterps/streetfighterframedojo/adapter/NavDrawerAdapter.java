@@ -20,6 +20,7 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
     private static OnItemClickListener mListener;
     private ArrayList<NavDrawerItem> mDataset;
 
+
     public NavDrawerAdapter(ArrayList<NavDrawerItem> myDataset) {
         this.mDataset = myDataset;
     }
@@ -56,7 +57,7 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
         public ImageView mImageView;
-
+        public RecyclerView mExpandList;
 
         public ViewHolder(View v) {
             super(v);

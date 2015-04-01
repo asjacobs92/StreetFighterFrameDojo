@@ -18,7 +18,7 @@
 
     <array name="nav_drawer_items">
         <item>Home</item>
-        <item>Games</item>
+        <item>Matchups</item>
         <item>News</item>
         <item>Settings</item>
     </array>
@@ -27,6 +27,11 @@
         <item>@drawable/ic_gamepad</item>
         <item>@drawable/ic_newspaper</item>
         <item>@drawable/ic_settings</item>
+    </array>
+    <array name="game_titles">
+        <item>Ultra Street Fighter 4</item>
+        <item>Street Fighter 3 Third Strike</item>
+        <item>Super Street Fighter 2 Turbo</item>
     </array>
 
     <!-- Content Description -->

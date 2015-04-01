@@ -18,11 +18,9 @@
                 android:id="@+id/nav_drawer_item_image"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_account"/>
@@ -36,6 +34,13 @@
                 android:layout_toEndOf="@+id/nav_drawer_item_image"
                 android:text="Account"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <LinearLayout
+                android:id="@+id/nav_drawer_item_expand_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nav_drawer_item_text"
+                android:layout_toEndOf="@+id/nav_drawer_item_image"/>
         </RelativeLayout>
     </TableRow>
 </FrameLayout>

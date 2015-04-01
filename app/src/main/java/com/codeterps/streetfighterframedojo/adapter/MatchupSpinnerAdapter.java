@@ -19,6 +19,9 @@ import java.util.ArrayList;
  */
 public class MatchupSpinnerAdapter extends BaseAdapter {
 
+    private static final String VIEW_TAG_DROPDOWN = "DROPDOWN";
+    private static final String VIEW_TAG_NON_DROPDOWN = "NON_DROPDOWN";
+
     private Context mContext;
     private ArrayList<Character> mDataset = new ArrayList<>();
 
@@ -44,13 +47,18 @@ public class MatchupSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getDropDownView(int position, View view, ViewGroup parent) {
-        if (view == null || !view.getTag().toString().equals("DROPDOWN")) {
-            view = getLayoutInflater().inflate(R.layout.character_item_image, parent, false);
-            view.setTag("DROPDOWN");
+        if (view == null || !view.getTag().toString().equals(VIEW_TAG_DROPDOWN)) {
+            view = getLayoutInflater().inflate(R.layout.character_item_horizontal, parent, false);
+            view.setTag(VIEW_TAG_DROPDOWN);
         }
 
-        view.setPadding(15, 15, 15, 15);
+        TextView textView = (TextView) view.findViewById(R.id.character_item_name);
+        textView.setText(getItem(position).getCharacterName());
+        textView.setTextColor(mContext.getResources().getColor(android.R.color.white));
+        textView.setTransitionName(null);
+
         ImageView imageView = (ImageView) view.findViewById(R.id.character_item_image);
+        imageView.setTransitionName(null);
         imageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, getItem(position).getCharacterImagePath()));
 
         return view;
@@ -58,16 +66,17 @@ public class MatchupSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        if (view == null || !view.getTag().toString().equals("NON_DROPDOWN")) {
-            view = getLayoutInflater().inflate(R.layout.character_item_vertical, parent, false);
-            view.setTag("NON_DROPDOWN");
+        if (view == null || !view.getTag().toString().equals(VIEW_TAG_NON_DROPDOWN)) {
+            view = getLayoutInflater().inflate(R.layout.matchup_spinner, parent, false);
+            view.setTag(VIEW_TAG_NON_DROPDOWN);
         }
-        view.setPadding(15, 15, 15, 15);
 
         TextView textView = (TextView) view.findViewById(R.id.character_item_name);
         textView.setText(getItem(position).getCharacterName());
+        textView.setTransitionName(null);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.character_item_image);
+        imageView.setTransitionName(null);
         imageView.setImageDrawable(MediaUtils.getDrawableFromAssets(mContext, getItem(position).getCharacterImagePath()));
         return view;
     }
