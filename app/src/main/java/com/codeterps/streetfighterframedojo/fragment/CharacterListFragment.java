@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class CharacterListFragment extends Fragment {
         args.putSerializable(ARG_GAME, game);
         args.putStringArray(ARG_TRANSITION_NAMES, transitionNames);
         fragment.setArguments(args);
-        fragment.setEnterTransition(new Slide());
         return fragment;
     }
 
@@ -55,6 +55,8 @@ public class CharacterListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_list, container, false);
+        setEnterTransition(new Slide());
+        setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.game_list_return));
 
         if (getArguments() != null) {
             mGame = (Game) getArguments().getSerializable(ARG_GAME);

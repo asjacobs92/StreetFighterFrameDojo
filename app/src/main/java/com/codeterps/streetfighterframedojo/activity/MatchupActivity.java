@@ -6,16 +6,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.MatchupSpinnerAdapter;
 import com.codeterps.streetfighterframedojo.data.DatabaseHelper;
 import com.codeterps.streetfighterframedojo.model.Character;
 import com.codeterps.streetfighterframedojo.model.Game;
-import com.codeterps.streetfighterframedojo.util.MediaUtils;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
@@ -23,9 +20,10 @@ import java.util.ArrayList;
 
 public class MatchupActivity extends ActionBarActivity {
 
-    public static final String ARG_CHARACTER = "character";
+    public static final String ARG_GAME = "game";
 
-    private Character mCharacter;
+    private Game mGame;
+    private Game.GameId mGameId;
 
     private ArrayList<Character> mCharacters;
     private MatchupSpinnerAdapter mMatchupAdapter;
@@ -43,21 +41,17 @@ public class MatchupActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Bundle b = this.getIntent().getExtras();
-        if (b != null) {
-            mCharacter = (Character) b.getSerializable(ARG_CHARACTER);
+        mGameId = (Game.GameId) this.getIntent().getSerializableExtra(ARG_GAME);
 
+        if (mGameId != null) {
             mCharacters = new ArrayList<>();
             mMatchupAdapter = new MatchupSpinnerAdapter(this, mCharacters);
 
-            ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
-            characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this, mCharacter.getCharacterImagePath()));
+            Spinner matchupSpinner = (Spinner) findViewById(R.id.matchup_spinner);
+            matchupSpinner.setAdapter(mMatchupAdapter);
 
-            TextView characterName = (TextView) findViewById(R.id.character_item_name);
-            characterName.setText(mCharacter.getCharacterName());
-
-            Spinner mathcupSpinner = (Spinner) findViewById(R.id.matchup_spinner);
-            mathcupSpinner.setAdapter(mMatchupAdapter);
+            Spinner matchupSpinner2 = (Spinner) findViewById(R.id.matchup_spinner2);
+            matchupSpinner2.setAdapter(mMatchupAdapter);
         }
     }
 
@@ -69,7 +63,7 @@ public class MatchupActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_default, menu);
+        getMenuInflater().inflate(R.menu.menu_matchup, menu);
         return true;
     }
 
@@ -83,7 +77,6 @@ public class MatchupActivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public void onDestroy() {
@@ -113,15 +106,27 @@ public class MatchupActivity extends ActionBarActivity {
         @Override
         protected ArrayList<Character> doInBackground(Void... params) {
             ArrayList<Character> characterList = null;
-            if (mCharacter != null) {
-                try {
-                    getDbHelper().getCharacterDao().refresh(mCharacter);
-                    Game game = mCharacter.getGame();
-                    getDbHelper().getGameDao().refresh(game);
-                    characterList = new ArrayList<>(game.getGameCharacters());
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                switch (mGameId) {
+                    case USF4:
+                        mGame = getDbHelper().getGameDao().queryForEq("gameName", "Ultra Street Fighter 4").get(0);
+                        break;
+                    case SF3TS:
+                        mGame = getDbHelper().getGameDao().queryForEq("gameName", "Street Fighter 3 Third Strike").get(0);
+                        break;
+                    case SSF2T:
+                        mGame = getDbHelper().getGameDao().queryForEq("gameName", "Super Street Fighter 2 Turbo").get(0);
+                        break;
+                    default:
+                        mGame = getDbHelper().getGameDao().queryForEq("gameName", "Ultra Street Fighter 4").get(0);
+                        break;
                 }
+
+                if (mGame != null) {
+                    characterList = new ArrayList<>(mGame.getGameCharacters());
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
             return characterList;
         }

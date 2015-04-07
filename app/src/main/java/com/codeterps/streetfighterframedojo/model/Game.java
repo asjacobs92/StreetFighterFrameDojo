@@ -24,7 +24,6 @@ public class Game implements Serializable {
     private int clicks;
     @DatabaseField
     private long lastClick;
-
     @ForeignCollectionField
     private ForeignCollection<Character> gameCharacters;
 
@@ -74,6 +73,10 @@ public class Game implements Serializable {
 
     public void setGameCharacters(ForeignCollection<Character> gameCharacters) {
         this.gameCharacters = gameCharacters;
+    }
+
+    public enum GameId {
+        USF4, SF3TS, SSF2T
     }
 
 }

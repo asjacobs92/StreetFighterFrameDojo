@@ -1,7 +1,5 @@
 package com.codeterps.streetfighterframedojo.activity;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +47,6 @@ public class CharacterDetailsActivity extends ActionBarActivity {
         if (b != null) {
             mCharacter = (Character) b.getSerializable(ARG_CHARACTER);
 
-
             ImageView characterImage = (ImageView) findViewById(R.id.character_item_image);
             characterImage.setImageDrawable(MediaUtils.getDrawableFromAssets(this, mCharacter.getCharacterImagePath()));
 
@@ -70,7 +66,7 @@ public class CharacterDetailsActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_character_details, menu);
+        getMenuInflater().inflate(R.menu.menu_default, menu);
         return true;
     }
 
@@ -79,17 +75,6 @@ public class CharacterDetailsActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finishAfterTransition();
-                return true;
-            case R.id.action_matchuo:
-                Intent intent = new Intent(this, MatchupActivity.class);
-                Bundle args = new Bundle();
-                args.putSerializable(MatchupActivity.ARG_CHARACTER, mCharacter);
-                intent.putExtras(args);
-                ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation(this,
-                                Pair.create(findViewById(R.id.character_item_name), "character_item_name"),
-                                Pair.create(findViewById(R.id.character_item_image), "character_item_image"));
-                startActivity(intent, options.toBundle());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -12,8 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.Menu;
@@ -21,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,16 +27,20 @@ import android.widget.TextView;
 import com.codeterps.streetfighterframedojo.R;
 import com.codeterps.streetfighterframedojo.adapter.NavDrawerAdapter;
 import com.codeterps.streetfighterframedojo.fragment.HomeFragment;
+import com.codeterps.streetfighterframedojo.model.Game;
 import com.codeterps.streetfighterframedojo.model.NavDrawerItem;
 import com.codeterps.streetfighterframedojo.util.SessionManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity {
 
     private SessionManager mSessionManager;
 
-    private RecyclerView mDrawerList;
+    private ExpandableListView mDrawerList;
+    private NavDrawerAdapter mDrawerAdapter;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerListLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -61,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerListLayout = (LinearLayout) findViewById(R.id.drawer_list_layout);
-        mDrawerList = (RecyclerView) findViewById(R.id.left_drawer_list);
+        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer_list);
         mDrawerToggle = getActionBarDrawerToggle();
 
         mLoginButton = (Button) findViewById(R.id.account_sign_in_button);
@@ -104,30 +107,65 @@ public class MainActivity extends ActionBarActivity {
 
     private void initDrawerLayout() {
         String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        String[] navGameTitles = getResources().getStringArray(R.array.game_titles);
         TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
         ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<>();
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        for (int i = 0; i < navMenuTitles.length; i++) {
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
+        }
         navMenuIcons.recycle();
+
+        NavDrawerItem item = navDrawerItems.get(1);
+        HashMap<NavDrawerItem, ArrayList<String>> navDrawerSubItems = new HashMap<>();
+        navDrawerSubItems.put(item, new ArrayList<>(Arrays.asList(navGameTitles)));
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mDrawerList.setLayoutManager(llm);
-        NavDrawerAdapter adapter = new NavDrawerAdapter(navDrawerItems);
-        adapter.setOnItemClickListener(new NavDrawerAdapter.OnItemClickListener() {
+        mDrawerAdapter = new NavDrawerAdapter(this, navDrawerItems, navDrawerSubItems);
+        mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                selectItem(position);
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (mDrawerAdapter.getChildrenCount(groupPosition) == 0) {
+                    selectItem(groupPosition);
+                } else {
+                    if (mDrawerList.isGroupExpanded(groupPosition)) {
+                        mDrawerList.collapseGroup(groupPosition);
+                    } else {
+                        mDrawerList.expandGroup(groupPosition, true);
+                    }
+                }
+                return true;
             }
         });
-        mDrawerList.setAdapter(adapter);
+
+        mDrawerList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
+                Game.GameId gameId;
+                switch (i2) {
+                    case 0:
+                        gameId = Game.GameId.USF4;
+                        break;
+                    case 1:
+                        gameId = Game.GameId.SF3TS;
+                        break;
+                    case 2:
+                        gameId = Game.GameId.SSF2T;
+                        break;
+                    default:
+                        gameId = Game.GameId.USF4;
+                        break;
+                }
+
+                Intent intent = new Intent(view.getContext(), MatchupActivity.class);
+                intent.putExtra(MatchupActivity.ARG_GAME, gameId);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) view.getContext()).toBundle());
+                return false;
+            }
+        });
+        mDrawerList.expandGroup(1);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
@@ -136,8 +174,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-                        (Activity) v.getContext()).toBundle());
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext()).toBundle());
             }
         });
     }
